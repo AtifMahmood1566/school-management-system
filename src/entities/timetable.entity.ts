@@ -19,5 +19,6 @@ export class TimeTable extends Document{
 
     @Prop()
     roomNo : number
+    
 }
 export const TimeTableSchema = SchemaFactory.createForClass(TimeTable);
