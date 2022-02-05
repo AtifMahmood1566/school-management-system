@@ -1,18 +1,18 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { AdminService } from './admin.service';
-import { Admin } from '.././entities/admin.entity';
+import { AdminSignupResponseDto } from './ApiResponsesDtos/adminSignupResponse.dto';
 import { AdminDto } from './dto/admin.dto';
-// import { CreateAdminInput } from './dto/create-admin.input';
-// import { UpdateAdminInput } from './dto/update-admin.input';
+import { AdminSignupInput } from './inputs/adminSignup.input';
 
 @Resolver()
 export class AdminResolver {
   constructor(private readonly adminService: AdminService) {}
 
-  // @Mutation(() => Admin)
-  // createAdmin(@Args('createAdminInput') createAdminInput: CreateAdminInput) {
-  //   return this.adminService.create(createAdminInput);
-  // }
+  // mutation for admin signup
+  @Mutation(() => AdminSignupResponseDto)
+  adminRegistration(@Args('input') adminSignupInput: AdminSignupInput) {
+    return this.adminService.create(adminSignupInput);
+  }
 
   @Query(() => [AdminDto], { name: 'admin' })
   findAll() {

@@ -1,12 +1,37 @@
 import { Injectable } from '@nestjs/common';
-// import { CreateAdminInput } from './dto/create-admin.input';
-// import { UpdateAdminInput } from './dto/update-admin.input';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Admin } from '.././entities/admin.entity';
+import { AdminSignupInput } from './inputs/adminSignup.input';
 
 @Injectable()
 export class AdminService {
-  // create(createAdminInput: CreateAdminInput) {
-  //   return 'This action adds a new admin';
-  // }
+
+  constructor(@InjectModel(Admin.name) private adminModel : Model<Admin>){}
+
+  // funtion to signup amdin 
+  create(adminSignupInput: AdminSignupInput) {
+    try
+    {
+      const amdin = new this.adminModel(adminSignupInput);
+      const adminCreated = amdin.save();
+      
+      let apiResponse = {
+        code : 200,
+        message : "Admin is successfully created",
+        data : adminCreated
+      }
+      return apiResponse; 
+    }
+    catch
+    {
+      let apiResponse = {
+        code : 204,
+        message : "Some error in creating amdin "
+      }
+      return apiResponse; 
+    } 
+  }
 
   findAll() {
     return `This action returns all admin`;

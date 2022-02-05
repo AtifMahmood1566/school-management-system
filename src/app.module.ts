@@ -16,7 +16,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     playground : true,
     introspection : true,
   }),
-    MongooseModule.forRoot('mongodb+srv://atif:dbUserPassword@cluster0.x15aw.mongodb.net/newNgm?retryWrites=true&w=majority'),
+    MongooseModule.forRoot('mongodb+srv://atif:dbUserPassword@cluster0.x15aw.mongodb.net/school-management-system?retryWrites=true&w=majority'),
 ],
   controllers: [AppController],
   providers: [AppService],

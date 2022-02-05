@@ -70,6 +70,12 @@ type AdminDto {
   password: String!
 }
 
+type AdminSignupResponseDto {
+  code: Float!
+  message: String!
+  data: AdminDto
+}
+
 type Query {
   student(id: Int!): StudentDto!
   teacher(id: Int!): TeacherDto!
@@ -84,5 +90,12 @@ type Mutation {
   removeTeacher(id: Int!): TeacherDto!
   removeParent(id: Int!): ParentDto!
   removeAccountant(id: Int!): AccoutantDto!
+  adminRegistration(input: AdminSignupInput!): AdminSignupResponseDto!
   removeAdmin(id: Int!): AdminDto!
+}
+
+input AdminSignupInput {
+  name: String!
+  email: String!
+  password: String!
 }
