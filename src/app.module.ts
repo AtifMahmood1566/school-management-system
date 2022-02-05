@@ -6,9 +6,18 @@ import { TeacherModule } from './teacher/teacher.module';
 import { ParentsModule } from './parents/parents.module';
 import { AccountantModule } from './accountant/accountant.module';
 import { AdminModule } from './admin/admin.module';
+import { GraphQLModule } from '@nestjs/graphql';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  imports: [StudentModule, TeacherModule, ParentsModule, AccountantModule, AdminModule],
+  imports: [StudentModule, TeacherModule, ParentsModule, AccountantModule, AdminModule 
+    , GraphQLModule.forRoot({
+    autoSchemaFile: 'schema.gql',
+    playground : true,
+    introspection : true,
+  }),
+    MongooseModule.forRoot('mongodb+srv://atif:dbUserPassword@cluster0.x15aw.mongodb.net/newNgm?retryWrites=true&w=majority'),
+],
   controllers: [AppController],
   providers: [AppService],
 })

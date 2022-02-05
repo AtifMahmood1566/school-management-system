@@ -1,11 +1,11 @@
-import { Field, ObjectType } from "@nestjs/graphql";
+import { Field, ID, ObjectType } from "@nestjs/graphql";
 import * as mongoose from 'mongoose'
 
 @ObjectType()
 export class TeacherAttendanceDto {
 
   
-    @Field()
+    @Field(() => ID)
     teacherId: mongoose.Schema.Types.ObjectId
 
     @Field()

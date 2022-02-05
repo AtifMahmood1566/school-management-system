@@ -1,10 +1,11 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { AdminService } from './admin.service';
 import { Admin } from '.././entities/admin.entity';
+import { AdminDto } from './dto/admin.dto';
 // import { CreateAdminInput } from './dto/create-admin.input';
 // import { UpdateAdminInput } from './dto/update-admin.input';
 
-@Resolver(() => Admin)
+@Resolver()
 export class AdminResolver {
   constructor(private readonly adminService: AdminService) {}
 
@@ -13,12 +14,12 @@ export class AdminResolver {
   //   return this.adminService.create(createAdminInput);
   // }
 
-  @Query(() => [Admin], { name: 'admin' })
+  @Query(() => [AdminDto], { name: 'admin' })
   findAll() {
     return this.adminService.findAll();
   }
 
-  @Query(() => Admin, { name: 'admin' })
+  @Query(() => AdminDto, { name: 'admin' })
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.adminService.findOne(id);
   }
@@ -28,7 +29,7 @@ export class AdminResolver {
   //   return this.adminService.update(updateAdminInput.id, updateAdminInput);
   // }
 
-  @Mutation(() => Admin)
+  @Mutation(() => AdminDto)
   removeAdmin(@Args('id', { type: () => Int }) id: number) {
     return this.adminService.remove(id);
   }

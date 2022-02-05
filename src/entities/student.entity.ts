@@ -42,7 +42,7 @@ export class Student extends Document {
     section: string
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'parents' })
-    parrentId: mongoose.Schema.Types.ObjectId
+    parentId: mongoose.Schema.Types.ObjectId
 
     @Prop({ default: true })
     isStudent: boolean

@@ -1,10 +1,11 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { StudentService } from './student.service';
 import { Student } from '.././entities/student.entity';
+import { StudentDto } from './dto/student.dto';
 // import { CreateStudentInput } from './dto/create-student.input';
 // import { UpdateStudentInput } from './dto/update-student.input';
 
-@Resolver(() => Student)
+@Resolver()
 export class StudentResolver {
   constructor(private readonly studentService: StudentService) {}
 
@@ -13,22 +14,22 @@ export class StudentResolver {
   //   return this.studentService.create(createStudentInput);
   // }
 
-  @Query(() => [Student], { name: 'student' })
+  @Query(() => [StudentDto], { name: 'student' })
   findAll() {
     return this.studentService.findAll();
   }
 
-  @Query(() => Student, { name: 'student' })
+  @Query(() => StudentDto, { name: 'student' })
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.studentService.findOne(id);
   }
 
-  // @Mutation(() => Student)
+  // @Mutation(() => StudentDto)
   // updateStudent(@Args('updateStudentInput') updateStudentInput: UpdateStudentInput) {
   //   return this.studentService.update(updateStudentInput.id, updateStudentInput);
   // }
 
-  @Mutation(() => Student)
+  @Mutation(() => StudentDto)
   removeStudent(@Args('id', { type: () => Int }) id: number) {
     return this.studentService.remove(id);
   }

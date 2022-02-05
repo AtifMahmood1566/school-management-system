@@ -1,0 +1,88 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type StudentDto {
+  name: String!
+  email: String!
+  password: String!
+  gender: String!
+  religion: String!
+  joiningDate: DateTime!
+  dob: DateTime!
+  age: Float!
+  address: String!
+  rollNumber: Float!
+  class: Float!
+  section: String!
+  parentId: ID!
+  isStudent: Boolean!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type TeacherDto {
+  name: String!
+  email: String!
+  password: String!
+  gender: String!
+  religion: String!
+  joiningDate: DateTime!
+  dob: DateTime!
+  age: Float!
+  address: String!
+  salary: Float!
+  employeeId: String!
+  contactNo: Float!
+  isTeacher: Boolean!
+}
+
+type ParentDto {
+  name: String!
+  email: String!
+  password: String!
+  gender: String!
+  contactNo: Float!
+}
+
+type AccoutantDto {
+  name: String!
+  email: String!
+  password: String!
+  gender: String!
+  religion: String!
+  joiningDate: DateTime!
+  dob: DateTime!
+  age: Float!
+  address: String!
+  salary: Float!
+  employeeId: String!
+  contactNo: Float!
+  isAccountant: Boolean!
+}
+
+type AdminDto {
+  name: String!
+  email: String!
+  password: String!
+}
+
+type Query {
+  student(id: Int!): StudentDto!
+  teacher(id: Int!): TeacherDto!
+  parents: [ParentDto!]!
+  parent(id: Int!): ParentDto!
+  accountant(id: Int!): AccoutantDto!
+  admin(id: Int!): AdminDto!
+}
+
+type Mutation {
+  removeStudent(id: Int!): StudentDto!
+  removeTeacher(id: Int!): TeacherDto!
+  removeParent(id: Int!): ParentDto!
+  removeAccountant(id: Int!): AccoutantDto!
+  removeAdmin(id: Int!): AdminDto!
+}

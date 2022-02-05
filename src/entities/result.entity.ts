@@ -22,6 +22,6 @@ export class Result extends Document {
 
     @Prop()
     percentage: number
-    
+     
 }
 export const ResultSchema = SchemaFactory.createForClass(Result);

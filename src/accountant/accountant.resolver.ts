@@ -1,10 +1,11 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { AccountantService } from './accountant.service';
 import { Accountant } from '.././entities/accountant.entity';
+import { AccoutantDto } from './dto/accountant.dto';
 // import { CreateAccountantInput } from './dto/create-accountant.input';
 // import { UpdateAccountantInput } from './dto/update-accountant.input';
 
-@Resolver(() => Accountant)
+@Resolver()
 export class AccountantResolver {
   constructor(private readonly accountantService: AccountantService) {}
 
@@ -13,12 +14,12 @@ export class AccountantResolver {
   //   return this.accountantService.create(createAccountantInput);
   // }
 
-  @Query(() => [Accountant], { name: 'accountant' })
+  @Query(() => [AccoutantDto], { name: 'accountant' })
   findAll() {
     return this.accountantService.findAll();
   }
 
-  @Query(() => Accountant, { name: 'accountant' })
+  @Query(() => AccoutantDto, { name: 'accountant' })
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.accountantService.findOne(id);
   }
@@ -28,7 +29,7 @@ export class AccountantResolver {
   //   return this.accountantService.update(updateAccountantInput.id, updateAccountantInput);
   // }
 
-  @Mutation(() => Accountant)
+  @Mutation(() => AccoutantDto)
   removeAccountant(@Args('id', { type: () => Int }) id: number) {
     return this.accountantService.remove(id);
   }
