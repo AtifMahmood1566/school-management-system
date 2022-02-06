@@ -1,36 +1,15 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { ParentsService } from './parents.service';
-import { Parent } from '.././entities/parent.entity';
-import { ParentDto } from './dto/parents.dto';
-// import { CreateParentInput } from './dto/create-parent.input';
-// import { UpdateParentInput } from './dto/update-parent.input';
+import { parentsLoginResponseDto } from './ParentsApiResponsesDtos/parentsLoginResponse.dto';
+import { parentsLoginInput } from './inputs/parentsLogin.input';
 
 @Resolver()
 export class ParentsResolver {
   constructor(private readonly parentsService: ParentsService) {}
 
-  // @Mutation(() => Parent)
-  // createParent(@Args('createParentInput') createParentInput: CreateParentInput) {
-  //   return this.parentsService.create(createParentInput);
-  // }
-
-  @Query(() => [ParentDto], { name: 'parents' })
-  findAll() {
-    return this.parentsService.findAll();
-  }
-
-  @Query(() => ParentDto, { name: 'parent' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.parentsService.findOne(id);
-  }
-
-  // @Mutation(() => Parent)
-  // updateParent(@Args('updateParentInput') updateParentInput: UpdateParentInput) {
-  //   return this.parentsService.update(updateParentInput.id, updateParentInput);
-  // }
-
-  @Mutation(() => ParentDto)
-  removeParent(@Args('id', { type: () => Int }) id: number) {
-    return this.parentsService.remove(id);
+  @Mutation(() => parentsLoginResponseDto)
+  async parentsLogin(@Args('input') parentsLoginCredentials : parentsLoginInput) 
+  {
+    return await this.parentsService.loginParent(parentsLoginCredentials);
   }
 }
