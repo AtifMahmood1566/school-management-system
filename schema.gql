@@ -51,6 +51,11 @@ type ParentDto {
   contactNo: Float!
 }
 
+type accountantLoginResponseDto {
+  code: Float!
+  message: String!
+}
+
 type AccoutantDto {
   _id: String!
   name: String!
@@ -74,6 +79,21 @@ type AdminAccountantSignupResponseDto {
   data: AccoutantDto
 }
 
+type TimetableDto {
+  _id: String!
+  teacherId: ID!
+  day: String!
+  slot: String!
+  subject: ID!
+  roomNo: Float!
+}
+
+type AdminCreateTimetableResponseDto {
+  code: Float!
+  message: String!
+  data: TimetableDto
+}
+
 type SubjectDto {
   _id: String!
   name: String!
@@ -84,6 +104,11 @@ type AdminEnterSubjectResponseDto {
   code: Float!
   message: String!
   data: SubjectDto
+}
+
+type adminLoginResponseDto {
+  code: Float!
+  message: String!
 }
 
 type AdminParentSignupResponseDto {
@@ -122,20 +147,26 @@ type Query {
   teacher(id: Int!): TeacherDto!
   parents: [ParentDto!]!
   parent(id: Int!): ParentDto!
-  accountant(id: Int!): AccoutantDto!
 }
 
 type Mutation {
   removeStudent(id: Int!): StudentDto!
   removeTeacher(id: Int!): TeacherDto!
   removeParent(id: Int!): ParentDto!
-  removeAccountant(id: Int!): AccoutantDto!
+  accountantLogin(input: accountantLoginInput!): accountantLoginResponseDto!
   adminRegistration(input: AdminSignupInput!): AdminSignupResponseDto!
   adminTeacherSignup(input: adminTeacherSignupInput!): AdminTeacherSignupResponseDto!
   adminStudentSignup(input: adminStudentSignupInput!): AdminStudentSignupResponseDto!
   adminAccountantSignup(input: adminAccoutantSignupInput!): AdminAccountantSignupResponseDto!
   adminEnterSubject(input: adminEnterSubjectInput!): AdminEnterSubjectResponseDto!
   adminParentSignup(input: adminParentSignupInput!): AdminParentSignupResponseDto!
+  adminCreateTimetable(input: adminCreateTimetableInput!): AdminCreateTimetableResponseDto!
+  amdinLogin(input: adminLoginInput!): adminLoginResponseDto!
+}
+
+input accountantLoginInput {
+  email: String!
+  password: String!
 }
 
 input AdminSignupInput {
@@ -204,4 +235,18 @@ input adminParentSignupInput {
   password: String!
   gender: String!
   contactNo: Float!
+}
+
+input adminCreateTimetableInput {
+  _id: String!
+  teacherId: ID!
+  day: String!
+  slot: String!
+  subject: ID!
+  roomNo: Float!
+}
+
+input adminLoginInput {
+  email: String!
+  password: String!
 }

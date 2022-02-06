@@ -8,6 +8,7 @@ import { Student, StudentSchema } from '.././entities/student.entity';
 import { Accountant, AccountantSchema } from '.././entities/accountant.entity';
 import { Subject, SubjectSchema } from '.././entities/subject.entity';
 import { Parent, ParentSchema } from '.././entities/parent.entity';
+import { TimeTable, TimeTableSchema } from '.././entities/timetable.entity';
 
 @Module({
   imports : [MongooseModule.forFeature([
@@ -28,6 +29,9 @@ import { Parent, ParentSchema } from '.././entities/parent.entity';
     },
     {
       name : Parent.name , schema : ParentSchema
+    },
+    {
+      name : TimeTable.name , schema : TimeTableSchema
     }
   ])],
   providers: [AdminResolver, AdminService]

@@ -13,6 +13,9 @@ import { Subject } from '.././entities/subject.entity';
 import { adminEnterSubjectInput } from './inputs/adminEnterSubject.input';
 import { Parent } from '.././entities/parent.entity';
 import { adminParentSignupInput } from './inputs/adminParentSignup.input';
+import { TimeTable } from '.././entities/timetable.entity';
+import { adminCreateTimetableInput } from './inputs/adminCreateTimetable.input';
+import { adminLoginInput } from './inputs/adminLogin.input';
 
 @Injectable()
 export class AdminService {
@@ -23,14 +26,15 @@ export class AdminService {
     @InjectModel(Student.name) private studentModel: Model<Student>,
     @InjectModel(Accountant.name) private accountantModel: Model<Accountant>,
     @InjectModel(Subject.name) private subjectModel: Model<Subject>,
-    @InjectModel(Parent.name) private parentModel : Model<Parent>
+    @InjectModel(Parent.name) private parentModel: Model<Parent>,
+    @InjectModel(TimeTable.name) private timetableModel: Model<TimeTable>
   ) { }
 
   // funtion to signup amdin 
   async create(adminSignupInput: AdminSignupInput) {
     try {
       const amdin = new this.adminModel(adminSignupInput);
-      const adminCreated = await amdin.save();
+      const adminCreated = amdin.save();
 
       let apiResponse = {
         code: 200,
@@ -87,7 +91,7 @@ export class AdminService {
     {
       let apiResponse = {
         code: 204,
-        message: "Some error in creating teacher "
+        message: "Some error in creating student "
       }
       return apiResponse;
     }
@@ -115,8 +119,7 @@ export class AdminService {
     }
   }
 
-  adminEnterSubject(adminSubjectInput: adminEnterSubjectInput) 
-  {
+  adminEnterSubject(adminSubjectInput: adminEnterSubjectInput) {
     try {
       const subject = new this.subjectModel(adminSubjectInput);
       const subjectCreated = subject.save();
@@ -138,8 +141,7 @@ export class AdminService {
     }
   }
 
-  adminCreateParent(adminParentInput : adminParentSignupInput)
-  {
+  adminCreateParent(adminParentInput: adminParentSignupInput) {
     try {
       const parent = new this.parentModel(adminParentInput);
       const parentCreated = parent.save();
@@ -158,6 +160,65 @@ export class AdminService {
         message: "Some error in creating parent "
       }
       return apiResponse;
+    }
+  }
+
+  adminCreateTimetable(adminTimetableInput: adminCreateTimetableInput) {
+    try {
+      const timetable = new this.timetableModel(adminTimetableInput);
+      const timetableCreated = timetable.save();
+
+      let apiResponse = {
+        code: 200,
+        message: "Timetable is successfully added",
+        data: timetableCreated
+      }
+      return apiResponse;
+    }
+    catch
+    {
+      let apiResponse = {
+        code: 204,
+        message: "Some error in creating timetable "
+      }
+      return apiResponse;
+    }
+  }
+
+  async loginAdmin(adminLoginCredentials: adminLoginInput) {
+    try {
+      const admin = await this.adminModel.find({
+        $and: [
+          { email: { $eq: adminLoginCredentials.email } },
+          { password: { $eq: adminLoginCredentials.password } }
+        ]
+      })
+
+      if (admin.length == 0) {
+        let apiResponse = {
+          code: 404,
+          message: "Your email or password might be wrong"
+        }
+
+        return apiResponse
+      }
+      else {
+        let apiResponse = {
+          code: 200,
+          message: "You are successfully logged in"
+        }
+
+        return apiResponse
+      }
+    }
+    catch
+    {
+      let apiResponse = {
+        code: 204,
+        message: "Some error in logging in"
+      }
+
+      return apiResponse
     }
   }
 
