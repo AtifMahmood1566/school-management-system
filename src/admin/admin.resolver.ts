@@ -1,8 +1,17 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { AdminService } from './admin.service';
+import { AdminAccountantSignupResponseDto } from './ApiResponsesDtos/adminAccountantSignupResponse.dto';
+import { AdminEnterSubjectResponseDto } from './ApiResponsesDtos/adminEnterSubjectResponse.dto';
+import { AdminParentSignupResponseDto } from './ApiResponsesDtos/adminParentSignupResponse.dto';
 import { AdminSignupResponseDto } from './ApiResponsesDtos/adminSignupResponse.dto';
-import { AdminDto } from './dto/admin.dto';
+import { AdminStudentSignupResponseDto } from './ApiResponsesDtos/adminStudentSignupResponse.dto';
+import { AdminTeacherSignupResponseDto } from './ApiResponsesDtos/adminTeacherSignupResponse.dto';
+import { adminAccoutantSignupInput } from './inputs/adminAccountantSignup.input';
+import { adminEnterSubjectInput } from './inputs/adminEnterSubject.input';
+import { adminParentSignupInput } from './inputs/adminParentSignup.input';
 import { AdminSignupInput } from './inputs/adminSignup.input';
+import { adminStudentSignupInput } from './inputs/adminStudentSignup.input';
+import { adminTeacherSignupInput } from './inputs/adminTeacherSignup.input';
 
 @Resolver()
 export class AdminResolver {
@@ -10,27 +19,42 @@ export class AdminResolver {
 
   // mutation for admin signup
   @Mutation(() => AdminSignupResponseDto)
-  adminRegistration(@Args('input') adminSignupInput: AdminSignupInput) {
-    return this.adminService.create(adminSignupInput);
+  async adminRegistration(@Args('input') adminSignupInput: AdminSignupInput) {
+    return await this.adminService.create(adminSignupInput);
   }
 
-  @Query(() => [AdminDto], { name: 'admin' })
-  findAll() {
-    return this.adminService.findAll();
+  //mutation of admin to signup teacher
+  @Mutation(() => AdminTeacherSignupResponseDto)
+  async adminTeacherSignup(@Args('input') adminTeacherInput : adminTeacherSignupInput )
+  {
+    return await this.adminService.adminCreateTeacher(adminTeacherInput);
   }
 
-  @Query(() => AdminDto, { name: 'admin' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.adminService.findOne(id);
+  //mutation of admin to signup student
+  @Mutation(() => AdminStudentSignupResponseDto)
+  async adminStudentSignup(@Args('input') adminStudentInput : adminStudentSignupInput)
+  {
+    return await this.adminService.adminCreateStudent(adminStudentInput)
   }
 
-  // @Mutation(() => Admin)
-  // updateAdmin(@Args('updateAdminInput') updateAdminInput: UpdateAdminInput) {
-  //   return this.adminService.update(updateAdminInput.id, updateAdminInput);
-  // }
+  //mutation of admin to signup accountant
+  @Mutation(() => AdminAccountantSignupResponseDto)
+  async adminAccountantSignup(@Args('input') adminAccountantInput : adminAccoutantSignupInput)
+  {
+    return await this.adminService.adminCreateAccountant(adminAccountantInput)
+  }
 
-  @Mutation(() => AdminDto)
-  removeAdmin(@Args('id', { type: () => Int }) id: number) {
-    return this.adminService.remove(id);
+  //mutation of admin to enter or create subject
+  @Mutation(() => AdminEnterSubjectResponseDto)
+  async adminEnterSubject(@Args('input') adminSubjectInput : adminEnterSubjectInput)
+  {
+    return await this.adminService.adminEnterSubject(adminSubjectInput)
+  }
+
+  //mutation of admin to signup parent
+  @Mutation(() => AdminParentSignupResponseDto)
+  async adminParentSignup(@Args('input') adminParentInput : adminParentSignupInput)
+  {
+    return await this.adminService.adminCreateParent(adminParentInput)
   }
 }

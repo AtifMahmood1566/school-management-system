@@ -1,10 +1,7 @@
-import { Field, ObjectType } from "@nestjs/graphql";
+import { Field, InputType} from "@nestjs/graphql";
 
-@ObjectType()
-export class TeacherDto {
-
-    @Field()
-    _id : string
+@InputType()
+export class adminTeacherSignupInput {
 
     @Field()
     name: string
@@ -21,7 +18,7 @@ export class TeacherDto {
     @Field()
     religion: string
 
-    @Field()
+    @Field({nullable : true})
     joiningDate: Date
 
     @Field()
@@ -42,7 +39,7 @@ export class TeacherDto {
     @Field()
     contactNo: number
 
-    @Field()
+    @Field({nullable : true})
     isTeacher: boolean
 
 }

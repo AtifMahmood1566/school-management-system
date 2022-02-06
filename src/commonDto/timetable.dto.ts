@@ -4,6 +4,9 @@ import * as mongoose from 'mongoose'
 @ObjectType()
 export class TimetableDto {
 
+    @Field()
+    _id : string
+
     @Field(() => ID)
     teacherId: mongoose.Schema.Types.ObjectId
 

@@ -1,10 +1,7 @@
-import { Field , ObjectType } from "@nestjs/graphql";
+import { Field , InputType } from "@nestjs/graphql";
 
-@ObjectType()
-export class AccoutantDto{
-
-    @Field()
-    _id : string
+@InputType()
+export class adminAccoutantSignupInput{
 
     @Field()
     readonly name: string
@@ -21,7 +18,7 @@ export class AccoutantDto{
     @Field()
     readonly religion : string
 
-    @Field()
+    @Field({nullable : true})
     readonly joiningDate : Date
 
     @Field()
@@ -40,9 +37,9 @@ export class AccoutantDto{
     readonly employeeId : string
 
     @Field()
-    readonly contactNo : number
+    readonly contactNo : number 
 
-    @Field()
+    @Field({nullable : true})
     readonly isAccountant : boolean
 
 }

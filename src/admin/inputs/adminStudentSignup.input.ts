@@ -1,11 +1,8 @@
-import { Field , ID, ObjectType } from "@nestjs/graphql";
+import { Field , ID, InputType} from "@nestjs/graphql";
 import * as mongoose from 'mongoose'
 
-@ObjectType()
-export class StudentDto{
-
-    @Field()
-    _id : string
+@InputType()
+export class  adminStudentSignupInput{
 
     @Field()
     name: string
@@ -22,7 +19,7 @@ export class StudentDto{
     @Field()
     religion: string
 
-    @Field()
+    @Field({nullable : true})
     joiningDate: Date
 
     @Field()
@@ -46,7 +43,7 @@ export class StudentDto{
     @Field(() => ID)
     parentId: mongoose.Schema.Types.ObjectId
 
-    @Field()
+    @Field({nullable : true})
     isStudent: boolean
 
 }

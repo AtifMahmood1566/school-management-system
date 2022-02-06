@@ -42,4 +42,4 @@ export class Accountant extends Document{
     @Prop({default : true})
     isAccountant : boolean
 }
-export const TeacherSchema = SchemaFactory.createForClass(Accountant);
+export const AccountantSchema = SchemaFactory.createForClass(Accountant);

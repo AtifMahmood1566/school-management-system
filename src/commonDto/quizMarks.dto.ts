@@ -4,6 +4,9 @@ import * as mongoose from 'mongoose'
 @ObjectType()
 export class QuizzMarksDto {
 
+    @Field()
+    _id : string
+
     @Field(() => ID)
     studentId: mongoose.Schema.Types.ObjectId
 
