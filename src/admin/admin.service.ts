@@ -20,6 +20,7 @@ import { AdminUpdateCredentialsInput } from './inputs/adminUpdateCredentials.inp
 import { adminParentUpdateCredentialsInput } from './inputs/adminParentUpdateCredentials.input';
 import { adminStudentUpdateCredentialsInput } from './inputs/adminStudentUpdateCredentials.input'
 import { adminTeacherUpdateCredentialsInput } from './inputs/adminTeacherUpdateCredentials.input';
+import { adminAccoutantUpdateCredentialsInput } from './inputs/adminAccountantUpdateCredentials.input';
 
 @Injectable()
 export class AdminService {
@@ -399,6 +400,55 @@ export class AdminService {
       let apiResponse = {
         code: 400,
         message: "Error in updating teacher credentials"
+      }
+
+      return apiResponse
+    }
+  }
+
+  async updateAccountantCredentials(adminAccountantCredentialsUpdate : adminAccoutantUpdateCredentialsInput)
+  {
+    try {
+      const accountant = await this.accountantModel.findOne({ _id: { $eq: adminAccountantCredentialsUpdate._id } }).exec();
+
+      if (!accountant) {
+        let apiResponse = {
+          code: 404,
+          message: "Accountant not found"
+        }
+
+        return apiResponse
+      }
+      else {
+        accountant.name = adminAccountantCredentialsUpdate.name;
+        accountant.email = adminAccountantCredentialsUpdate.email;
+        accountant.password = adminAccountantCredentialsUpdate.password;
+        accountant.gender = adminAccountantCredentialsUpdate.gender;
+        accountant.religion = adminAccountantCredentialsUpdate.religion;
+        accountant.dob = adminAccountantCredentialsUpdate.dob;
+        accountant.age = adminAccountantCredentialsUpdate.age;
+        accountant.address = adminAccountantCredentialsUpdate.address;
+        accountant.salary = adminAccountantCredentialsUpdate.salary;
+        accountant.employeeId = adminAccountantCredentialsUpdate.employeeId;
+        accountant.contactNo = adminAccountantCredentialsUpdate.contactNo;
+        accountant.isAccountant = adminAccountantCredentialsUpdate.isAccountant;
+
+        const updatedAccountant = accountant.save();
+
+        let apiResponse = {
+          code: 200,
+          message: "Accountant credentials are updated successfully",
+          data: updatedAccountant
+        }
+
+        return apiResponse
+      }
+    }
+    catch
+    {
+      let apiResponse = {
+        code: 400,
+        message: "Error in updating accountant credentials"
       }
 
       return apiResponse

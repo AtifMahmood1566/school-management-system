@@ -67,6 +67,12 @@ type AdminAccountantSignupResponseDto {
   data: AccoutantDto
 }
 
+type AdminAccountantUpdateCredentialsResponseDto {
+  code: Float!
+  message: String!
+  data: AccoutantDto
+}
+
 type TimetableDto {
   _id: String!
   teacherId: ID!
@@ -202,6 +208,7 @@ type Mutation {
   adminParentUpdateCredentials(input: adminParentUpdateCredentialsInput!): AdminParentUpdateCredentialsResponseDto!
   adminStudentUpdateCredentials(input: adminStudentUpdateCredentialsInput!): AdminStudentUpdateCredentialsResponseDto!
   adminTeacherUpdateCredentials(input: adminTeacherUpdateCredentialsInput!): AdminTeacherUpdateCredentialsResponseDto!
+  adminAccountantUpdateCredentials(input: adminAccoutantUpdateCredentialsInput!): AdminAccountantUpdateCredentialsResponseDto!
 }
 
 input studentsLoginInput {
@@ -353,4 +360,21 @@ input adminTeacherUpdateCredentialsInput {
   employeeId: String!
   contactNo: Float!
   isTeacher: Boolean
+}
+
+input adminAccoutantUpdateCredentialsInput {
+  _id: ID!
+  name: String!
+  email: String!
+  password: String!
+  gender: String!
+  religion: String!
+  joiningDate: DateTime
+  dob: DateTime!
+  age: Float!
+  address: String!
+  salary: Float!
+  employeeId: String!
+  contactNo: Float!
+  isAccountant: Boolean
 }

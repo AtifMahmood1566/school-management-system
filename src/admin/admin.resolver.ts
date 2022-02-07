@@ -1,6 +1,7 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { AdminService } from './admin.service';
 import { AdminAccountantSignupResponseDto } from './ApiResponsesDtos/adminAccountantSignupResponse.dto';
+import { AdminAccountantUpdateCredentialsResponseDto } from './ApiResponsesDtos/adminAccountantUpdateCredentialsResponse.dto';
 import { AdminCreateTimetableResponseDto } from './ApiResponsesDtos/adminCreateTimetableResponse.dto';
 import { AdminEnterSubjectResponseDto } from './ApiResponsesDtos/adminEnterSubjectResponse.dto';
 import { adminLoginResponseDto } from './ApiResponsesDtos/adminLoginResponse.dto';
@@ -13,6 +14,7 @@ import { AdminTeacherSignupResponseDto } from './ApiResponsesDtos/adminTeacherSi
 import { AdminTeacherUpdateCredentialsResponseDto } from './ApiResponsesDtos/adminTeacherUpdateCredentials.dto';
 import { AdminUpdateCredentialsResponseDto } from './ApiResponsesDtos/adminUpdateCredentials.dto';
 import { adminAccoutantSignupInput } from './inputs/adminAccountantSignup.input';
+import { adminAccoutantUpdateCredentialsInput } from './inputs/adminAccountantUpdateCredentials.input';
 import { adminCreateTimetableInput } from './inputs/adminCreateTimetable.input';
 import { adminEnterSubjectInput } from './inputs/adminEnterSubject.input';
 import { adminLoginInput } from './inputs/adminLogin.input';
@@ -110,5 +112,12 @@ export class AdminResolver {
   async adminTeacherUpdateCredentials(@Args('input') adminTeacherCredentialsUpdate : adminTeacherUpdateCredentialsInput)
   {
     return await this.adminService.updateTeacherCredentials(adminTeacherCredentialsUpdate)
+  }
+
+  //mutation of admin to update accountant credentials
+  @Mutation(() => AdminAccountantUpdateCredentialsResponseDto)
+  async adminAccountantUpdateCredentials(@Args('input') adminAccountantCredentialsUpdate : adminAccoutantUpdateCredentialsInput)
+  {
+    return await this.adminService.updateAccountantCredentials(adminAccountantCredentialsUpdate)
   }
 }
