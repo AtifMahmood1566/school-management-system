@@ -10,6 +10,7 @@ import { AdminSignupResponseDto } from './ApiResponsesDtos/adminSignupResponse.d
 import { AdminStudentSignupResponseDto } from './ApiResponsesDtos/adminStudentSignupResponse.dto';
 import { AdminStudentUpdateCredentialsResponseDto } from './ApiResponsesDtos/adminStudentUpdateCredentials.dto';
 import { AdminTeacherSignupResponseDto } from './ApiResponsesDtos/adminTeacherSignupResponse.dto';
+import { AdminTeacherUpdateCredentialsResponseDto } from './ApiResponsesDtos/adminTeacherUpdateCredentials.dto';
 import { AdminUpdateCredentialsResponseDto } from './ApiResponsesDtos/adminUpdateCredentials.dto';
 import { adminAccoutantSignupInput } from './inputs/adminAccountantSignup.input';
 import { adminCreateTimetableInput } from './inputs/adminCreateTimetable.input';
@@ -21,6 +22,7 @@ import { AdminSignupInput } from './inputs/adminSignup.input';
 import { adminStudentSignupInput } from './inputs/adminStudentSignup.input';
 import { adminStudentUpdateCredentialsInput } from './inputs/adminStudentUpdateCredentials.input';
 import { adminTeacherSignupInput } from './inputs/adminTeacherSignup.input';
+import { adminTeacherUpdateCredentialsInput } from './inputs/adminTeacherUpdateCredentials.input';
 import { AdminUpdateCredentialsInput } from './inputs/adminUpdateCredentials.input';
 
 @Resolver()
@@ -101,5 +103,12 @@ export class AdminResolver {
   async adminStudentUpdateCredentials(@Args('input') adminStudentCredentialsUpdate : adminStudentUpdateCredentialsInput)
   {
     return await this.adminService.updateStudentCredentials(adminStudentCredentialsUpdate)
+  }
+
+  //mutation of admin to update teacher credentials
+  @Mutation(() => AdminTeacherUpdateCredentialsResponseDto)
+  async adminTeacherUpdateCredentials(@Args('input') adminTeacherCredentialsUpdate : adminTeacherUpdateCredentialsInput)
+  {
+    return await this.adminService.updateTeacherCredentials(adminTeacherCredentialsUpdate)
   }
 }

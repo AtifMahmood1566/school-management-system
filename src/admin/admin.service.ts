@@ -19,6 +19,7 @@ import { adminLoginInput } from './inputs/adminLogin.input';
 import { AdminUpdateCredentialsInput } from './inputs/adminUpdateCredentials.input';
 import { adminParentUpdateCredentialsInput } from './inputs/adminParentUpdateCredentials.input';
 import { adminStudentUpdateCredentialsInput } from './inputs/adminStudentUpdateCredentials.input'
+import { adminTeacherUpdateCredentialsInput } from './inputs/adminTeacherUpdateCredentials.input';
 
 @Injectable()
 export class AdminService {
@@ -349,6 +350,55 @@ export class AdminService {
       let apiResponse = {
         code: 400,
         message: "Error in updating student credentials"
+      }
+
+      return apiResponse
+    }
+  }
+
+  async updateTeacherCredentials(adminTeacherCredentialsUpdate : adminTeacherUpdateCredentialsInput)
+  {
+    try {
+      const teacher = await this.teacherModel.findOne({ _id: { $eq: adminTeacherCredentialsUpdate._id } }).exec();
+
+      if (!teacher) {
+        let apiResponse = {
+          code: 404,
+          message: "Teacher not found"
+        }
+
+        return apiResponse
+      }
+      else {
+        teacher.name = adminTeacherCredentialsUpdate.name;
+        teacher.email = adminTeacherCredentialsUpdate.email;
+        teacher.password = adminTeacherCredentialsUpdate.password;
+        teacher.gender = adminTeacherCredentialsUpdate.gender;
+        teacher.religion = adminTeacherCredentialsUpdate.religion;
+        teacher.dob = adminTeacherCredentialsUpdate.dob;
+        teacher.age = adminTeacherCredentialsUpdate.age;
+        teacher.address = adminTeacherCredentialsUpdate.address;
+        teacher.salary = adminTeacherCredentialsUpdate.salary;
+        teacher.employeeId = adminTeacherCredentialsUpdate.employeeId;
+        teacher.contactNo = adminTeacherCredentialsUpdate.contactNo;
+        teacher.isTeacher = adminTeacherCredentialsUpdate.isTeacher;
+
+        const updatedTeacher = teacher.save();
+
+        let apiResponse = {
+          code: 200,
+          message: "Teacher credentials are updated successfully",
+          data: updatedTeacher
+        }
+
+        return apiResponse
+      }
+    }
+    catch
+    {
+      let apiResponse = {
+        code: 400,
+        message: "Error in updating teacher credentials"
       }
 
       return apiResponse
