@@ -25,9 +25,6 @@ export class adminAccoutantSignupInput{
     readonly dob: Date
 
     @Field()
-    readonly age : number
-
-    @Field()
     readonly address: string
 
     @Field()

@@ -27,9 +27,6 @@ export class  adminStudentUpdateCredentialsInput{
     dob: Date
 
     @Field()
-    age: number
-
-    @Field()
     address: string
 
     @Field()

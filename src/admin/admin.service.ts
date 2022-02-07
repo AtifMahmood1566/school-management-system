@@ -63,6 +63,13 @@ export class AdminService {
   adminCreateTeacher(adminTeacherInput: adminTeacherSignupInput) {
     try {
       const teacher = new this.teacherModel(adminTeacherInput);
+
+      const today = new Date().getFullYear();
+      const inputDob = teacher.dob.getFullYear();
+
+      const age = today - inputDob;
+      teacher.age = age;
+
       const teacherCreated = teacher.save();
 
       let apiResponse = {
@@ -85,6 +92,13 @@ export class AdminService {
   adminCreateStudent(adminStudentInput: adminStudentSignupInput) {
     try {
       const student = new this.studentModel(adminStudentInput);
+
+      const today = new Date().getFullYear();
+      const inputDob = student.dob.getFullYear();
+
+      const age = today - inputDob;
+      student.age = age;
+      
       const studentCreated = student.save();
 
       let apiResponse = {
@@ -107,6 +121,12 @@ export class AdminService {
   adminCreateAccountant(adminAccountantInput: adminAccoutantSignupInput) {
     try {
       const accountant = new this.accountantModel(adminAccountantInput);
+      const today = new Date().getFullYear();
+      const inputDob = accountant.dob.getFullYear();
+
+      const age = today - inputDob;
+      accountant.age = age;
+
       const accountantCreated = accountant.save();
 
       let apiResponse = {
@@ -323,13 +343,19 @@ export class AdminService {
         return apiResponse
       }
       else {
+        const today = new Date().getFullYear();
+        const inputDob = adminStudentCredentialsUpdate.dob.getFullYear();
+  
+        const age = today - inputDob;
+        student.age = age;
+  
+
         student.name = adminStudentCredentialsUpdate.name;
         student.email = adminStudentCredentialsUpdate.email;
         student.password = adminStudentCredentialsUpdate.password;
         student.gender = adminStudentCredentialsUpdate.gender;
         student.religion = adminStudentCredentialsUpdate.religion;
         student.dob = adminStudentCredentialsUpdate.dob;
-        student.age = adminStudentCredentialsUpdate.age;
         student.address = adminStudentCredentialsUpdate.address;
         student.rollNumber = adminStudentCredentialsUpdate.rollNumber;
         student.class = adminStudentCredentialsUpdate.class;
@@ -373,13 +399,19 @@ export class AdminService {
         return apiResponse
       }
       else {
+        const today = new Date().getFullYear();
+        const inputDob = adminTeacherCredentialsUpdate.dob.getFullYear();
+  
+        const age = today - inputDob;
+        teacher.age = age;
+  
+
         teacher.name = adminTeacherCredentialsUpdate.name;
         teacher.email = adminTeacherCredentialsUpdate.email;
         teacher.password = adminTeacherCredentialsUpdate.password;
         teacher.gender = adminTeacherCredentialsUpdate.gender;
         teacher.religion = adminTeacherCredentialsUpdate.religion;
         teacher.dob = adminTeacherCredentialsUpdate.dob;
-        teacher.age = adminTeacherCredentialsUpdate.age;
         teacher.address = adminTeacherCredentialsUpdate.address;
         teacher.salary = adminTeacherCredentialsUpdate.salary;
         teacher.employeeId = adminTeacherCredentialsUpdate.employeeId;
@@ -422,13 +454,18 @@ export class AdminService {
         return apiResponse
       }
       else {
+        const today = new Date().getFullYear();
+        const inputDob = adminAccountantCredentialsUpdate.dob.getFullYear();
+  
+        const age = today - inputDob;
+        accountant.age = age;
+
         accountant.name = adminAccountantCredentialsUpdate.name;
         accountant.email = adminAccountantCredentialsUpdate.email;
         accountant.password = adminAccountantCredentialsUpdate.password;
         accountant.gender = adminAccountantCredentialsUpdate.gender;
         accountant.religion = adminAccountantCredentialsUpdate.religion;
         accountant.dob = adminAccountantCredentialsUpdate.dob;
-        accountant.age = adminAccountantCredentialsUpdate.age;
         accountant.address = adminAccountantCredentialsUpdate.address;
         accountant.salary = adminAccountantCredentialsUpdate.salary;
         accountant.employeeId = adminAccountantCredentialsUpdate.employeeId;

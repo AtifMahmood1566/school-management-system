@@ -259,7 +259,6 @@ input adminTeacherSignupInput {
   religion: String!
   joiningDate: DateTime
   dob: DateTime!
-  age: Float!
   address: String!
   salary: Float!
   employeeId: String!
@@ -275,7 +274,6 @@ input adminStudentSignupInput {
   religion: String!
   joiningDate: DateTime
   dob: DateTime!
-  age: Float!
   address: String!
   rollNumber: Float!
   class: Float!
@@ -292,7 +290,6 @@ input adminAccoutantSignupInput {
   religion: String!
   joiningDate: DateTime
   dob: DateTime!
-  age: Float!
   address: String!
   salary: Float!
   employeeId: String!
@@ -350,7 +347,6 @@ input adminStudentUpdateCredentialsInput {
   gender: String!
   religion: String!
   dob: DateTime!
-  age: Float!
   address: String!
   rollNumber: Float!
   class: Float!
@@ -367,7 +363,6 @@ input adminTeacherUpdateCredentialsInput {
   gender: String!
   religion: String!
   dob: DateTime!
-  age: Float!
   address: String!
   salary: Float!
   employeeId: String!
@@ -384,7 +379,6 @@ input adminAccoutantUpdateCredentialsInput {
   religion: String!
   joiningDate: DateTime
   dob: DateTime!
-  age: Float!
   address: String!
   salary: Float!
   employeeId: String!

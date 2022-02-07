@@ -26,9 +26,6 @@ export class adminTeacherUpdateCredentialsInput {
     dob: Date
 
     @Field()
-    age: number
-
-    @Field()
     address: string
 
     @Field()

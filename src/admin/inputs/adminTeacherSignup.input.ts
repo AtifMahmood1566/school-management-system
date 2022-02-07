@@ -25,9 +25,6 @@ export class adminTeacherSignupInput {
     dob: Date
 
     @Field()
-    age: number
-
-    @Field()
     address: string
 
     @Field()
