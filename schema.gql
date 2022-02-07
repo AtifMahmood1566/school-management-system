@@ -114,6 +114,12 @@ type AdminParentSignupResponseDto {
   data: ParentDto
 }
 
+type AdminParentUpdateCredentialsResponseDto {
+  code: Float!
+  message: String!
+  data: ParentDto
+}
+
 type AdminDto {
   _id: String!
   name: String!
@@ -181,6 +187,7 @@ type Mutation {
   adminCreateTimetable(input: adminCreateTimetableInput!): AdminCreateTimetableResponseDto!
   amdinLogin(input: adminLoginInput!): adminLoginResponseDto!
   adminUpdateCredentials(input: AdminUpdateCredentialsInput!): AdminUpdateCredentialsResponseDto!
+  adminParentUpdateCredentials(input: adminParentUpdateCredentialsInput!): AdminParentUpdateCredentialsResponseDto!
 }
 
 input studentsLoginInput {
@@ -290,4 +297,13 @@ input AdminUpdateCredentialsInput {
   name: String!
   email: String!
   password: String!
+}
+
+input adminParentUpdateCredentialsInput {
+  _id: ID!
+  name: String!
+  email: String!
+  password: String!
+  gender: String!
+  contactNo: Float!
 }

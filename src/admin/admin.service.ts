@@ -17,6 +17,7 @@ import { TimeTable } from '.././entities/timetable.entity';
 import { adminCreateTimetableInput } from './inputs/adminCreateTimetable.input';
 import { adminLoginInput } from './inputs/adminLogin.input';
 import { AdminUpdateCredentialsInput } from './inputs/adminUpdateCredentials.input';
+import { adminParentUpdateCredentialsInput } from './inputs/adminParentUpdateCredentials.input';
 
 @Injectable()
 export class AdminService {
@@ -255,8 +256,49 @@ export class AdminService {
     catch
     {
       let apiResponse = {
-        code : 400,
-        message : "Error in updating admin credentials"
+        code: 400,
+        message: "Error in updating admin credentials"
+      }
+
+      return apiResponse
+    }
+  }
+
+  async updateParentCredentials(adminParentUpdateCeredentials: adminParentUpdateCredentialsInput) {
+    try {
+      const parent = await this.parentModel.findOne({ _id: { $eq: adminParentUpdateCeredentials._id } }).exec();
+
+      if (!parent) {
+        let apiResponse = {
+          code: 404,
+          message: "Parent not found"
+        }
+
+        return apiResponse
+      }
+      else {
+        parent.name = adminParentUpdateCeredentials.name;
+        parent.email = adminParentUpdateCeredentials.email;
+        parent.password = adminParentUpdateCeredentials.password;
+        parent.gender = adminParentUpdateCeredentials.gender;
+        parent.contactNo = adminParentUpdateCeredentials.contactNo;
+
+        const updatedParent = parent.save();
+
+        let apiResponse = {
+          code: 200,
+          message: "Parent credentials are updated successfully",
+          data: updatedParent
+        }
+
+        return apiResponse
+      }
+    }
+    catch
+    {
+      let apiResponse = {
+        code: 400,
+        message: "Error in updating admin credentials"
       }
 
       return apiResponse
