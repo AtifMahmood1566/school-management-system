@@ -4,9 +4,6 @@ import * as mongoose from 'mongoose'
 @InputType()
 export class adminCreateTimetableInput {
 
-    @Field()
-    _id : string
-
     @Field(() => ID)
     teacherId: mongoose.Schema.Types.ObjectId
 

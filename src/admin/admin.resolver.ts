@@ -10,6 +10,7 @@ import { AdminParentUpdateCredentialsResponseDto } from './ApiResponsesDtos/admi
 import { AdminSignupResponseDto } from './ApiResponsesDtos/adminSignupResponse.dto';
 import { AdminStudentSignupResponseDto } from './ApiResponsesDtos/adminStudentSignupResponse.dto';
 import { AdminStudentUpdateCredentialsResponseDto } from './ApiResponsesDtos/adminStudentUpdateCredentials.dto';
+import { AdminSubjectUpdateCredentialsResponseDto } from './ApiResponsesDtos/adminSubjectUpdateCredential.sdto';
 import { AdminTeacherSignupResponseDto } from './ApiResponsesDtos/adminTeacherSignupResponse.dto';
 import { AdminTeacherUpdateCredentialsResponseDto } from './ApiResponsesDtos/adminTeacherUpdateCredentials.dto';
 import { AdminUpdateCredentialsResponseDto } from './ApiResponsesDtos/adminUpdateCredentials.dto';
@@ -23,6 +24,7 @@ import { adminParentUpdateCredentialsInput } from './inputs/adminParentUpdateCre
 import { AdminSignupInput } from './inputs/adminSignup.input';
 import { adminStudentSignupInput } from './inputs/adminStudentSignup.input';
 import { adminStudentUpdateCredentialsInput } from './inputs/adminStudentUpdateCredentials.input';
+import { adminSubjectUpdateCredentialsInput } from './inputs/adminSubjectUpdateCredentials.input';
 import { adminTeacherSignupInput } from './inputs/adminTeacherSignup.input';
 import { adminTeacherUpdateCredentialsInput } from './inputs/adminTeacherUpdateCredentials.input';
 import { AdminUpdateCredentialsInput } from './inputs/adminUpdateCredentials.input';
@@ -119,5 +121,12 @@ export class AdminResolver {
   async adminAccountantUpdateCredentials(@Args('input') adminAccountantCredentialsUpdate : adminAccoutantUpdateCredentialsInput)
   {
     return await this.adminService.updateAccountantCredentials(adminAccountantCredentialsUpdate)
+  }
+
+  //mutation of admin to update subject credentials
+  @Mutation(() => AdminSubjectUpdateCredentialsResponseDto)
+  async adminSubjectUpdateCredentials(@Args('input') adminSubjectCredentialsUpdate : adminSubjectUpdateCredentialsInput)
+  {
+    return await this.adminService.updateSubjectCredentials(adminSubjectCredentialsUpdate)
   }
 }

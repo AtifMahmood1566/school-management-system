@@ -21,6 +21,7 @@ import { adminParentUpdateCredentialsInput } from './inputs/adminParentUpdateCre
 import { adminStudentUpdateCredentialsInput } from './inputs/adminStudentUpdateCredentials.input'
 import { adminTeacherUpdateCredentialsInput } from './inputs/adminTeacherUpdateCredentials.input';
 import { adminAccoutantUpdateCredentialsInput } from './inputs/adminAccountantUpdateCredentials.input';
+import { adminSubjectUpdateCredentialsInput } from './inputs/adminSubjectUpdateCredentials.input';
 
 @Injectable()
 export class AdminService {
@@ -449,6 +450,45 @@ export class AdminService {
       let apiResponse = {
         code: 400,
         message: "Error in updating accountant credentials"
+      }
+
+      return apiResponse
+    }
+  }
+
+  async updateSubjectCredentials(adminSubjectCredentialsUpdate : adminSubjectUpdateCredentialsInput)
+  {
+    try {
+      const subject = await this.subjectModel.findOne({ _id: { $eq: adminSubjectCredentialsUpdate._id } }).exec();
+
+      if (!subject) {
+        let apiResponse = {
+          code: 404,
+          message: "Subject not found"
+        }
+
+        return apiResponse
+      }
+      else {
+        subject.name = adminSubjectCredentialsUpdate.name;
+        subject.subjectCode = adminSubjectCredentialsUpdate.subjectCode;
+
+        const updatedSubject = subject.save();
+
+        let apiResponse = {
+          code: 200,
+          message: "Subject credentials are updated successfully",
+          data: updatedSubject
+        }
+
+        return apiResponse
+      }
+    }
+    catch
+    {
+      let apiResponse = {
+        code: 400,
+        message: "Error in updating subject credentials"
       }
 
       return apiResponse
