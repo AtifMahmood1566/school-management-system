@@ -18,6 +18,7 @@ import { adminCreateTimetableInput } from './inputs/adminCreateTimetable.input';
 import { adminLoginInput } from './inputs/adminLogin.input';
 import { AdminUpdateCredentialsInput } from './inputs/adminUpdateCredentials.input';
 import { adminParentUpdateCredentialsInput } from './inputs/adminParentUpdateCredentials.input';
+import { adminStudentUpdateCredentialsInput } from './inputs/adminStudentUpdateCredentials.input'
 
 @Injectable()
 export class AdminService {
@@ -264,9 +265,9 @@ export class AdminService {
     }
   }
 
-  async updateParentCredentials(adminParentUpdateCeredentials: adminParentUpdateCredentialsInput) {
+  async updateParentCredentials(adminParentCeredentialsUpdate: adminParentUpdateCredentialsInput) {
     try {
-      const parent = await this.parentModel.findOne({ _id: { $eq: adminParentUpdateCeredentials._id } }).exec();
+      const parent = await this.parentModel.findOne({ _id: { $eq: adminParentCeredentialsUpdate._id } }).exec();
 
       if (!parent) {
         let apiResponse = {
@@ -277,11 +278,11 @@ export class AdminService {
         return apiResponse
       }
       else {
-        parent.name = adminParentUpdateCeredentials.name;
-        parent.email = adminParentUpdateCeredentials.email;
-        parent.password = adminParentUpdateCeredentials.password;
-        parent.gender = adminParentUpdateCeredentials.gender;
-        parent.contactNo = adminParentUpdateCeredentials.contactNo;
+        parent.name = adminParentCeredentialsUpdate.name;
+        parent.email = adminParentCeredentialsUpdate.email;
+        parent.password = adminParentCeredentialsUpdate.password;
+        parent.gender = adminParentCeredentialsUpdate.gender;
+        parent.contactNo = adminParentCeredentialsUpdate.contactNo;
 
         const updatedParent = parent.save();
 
@@ -298,7 +299,56 @@ export class AdminService {
     {
       let apiResponse = {
         code: 400,
-        message: "Error in updating admin credentials"
+        message: "Error in updating parent credentials"
+      }
+
+      return apiResponse
+    }
+  }
+
+  async updateStudentCredentials(adminStudentCredentialsUpdate: adminStudentUpdateCredentialsInput) {
+    try {
+      const student = await this.studentModel.findOne({ _id: { $eq: adminStudentCredentialsUpdate._id } }).exec();
+
+      if (!student) {
+        let apiResponse = {
+          code: 404,
+          message: "Student not found"
+        }
+
+        return apiResponse
+      }
+      else {
+        student.name = adminStudentCredentialsUpdate.name;
+        student.email = adminStudentCredentialsUpdate.email;
+        student.password = adminStudentCredentialsUpdate.password;
+        student.gender = adminStudentCredentialsUpdate.gender;
+        student.religion = adminStudentCredentialsUpdate.religion;
+        student.dob = adminStudentCredentialsUpdate.dob;
+        student.age = adminStudentCredentialsUpdate.age;
+        student.address = adminStudentCredentialsUpdate.address;
+        student.rollNumber = adminStudentCredentialsUpdate.rollNumber;
+        student.class = adminStudentCredentialsUpdate.class;
+        student.section = adminStudentCredentialsUpdate.section;
+        student.parentId = adminStudentCredentialsUpdate.parentId;
+        student.isStudent = adminStudentCredentialsUpdate.isStudent;
+
+        const updatedStudent = student.save();
+
+        let apiResponse = {
+          code: 200,
+          message: "Student credentials are updated successfully",
+          data: updatedStudent
+        }
+
+        return apiResponse
+      }
+    }
+    catch
+    {
+      let apiResponse = {
+        code: 400,
+        message: "Error in updating student credentials"
       }
 
       return apiResponse

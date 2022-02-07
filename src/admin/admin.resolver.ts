@@ -8,6 +8,7 @@ import { AdminParentSignupResponseDto } from './ApiResponsesDtos/adminParentSign
 import { AdminParentUpdateCredentialsResponseDto } from './ApiResponsesDtos/adminParentUpdateCredentialsResponse.dto';
 import { AdminSignupResponseDto } from './ApiResponsesDtos/adminSignupResponse.dto';
 import { AdminStudentSignupResponseDto } from './ApiResponsesDtos/adminStudentSignupResponse.dto';
+import { AdminStudentUpdateCredentialsResponseDto } from './ApiResponsesDtos/adminStudentUpdateCredentials.dto';
 import { AdminTeacherSignupResponseDto } from './ApiResponsesDtos/adminTeacherSignupResponse.dto';
 import { AdminUpdateCredentialsResponseDto } from './ApiResponsesDtos/adminUpdateCredentials.dto';
 import { adminAccoutantSignupInput } from './inputs/adminAccountantSignup.input';
@@ -18,6 +19,7 @@ import { adminParentSignupInput } from './inputs/adminParentSignup.input';
 import { adminParentUpdateCredentialsInput } from './inputs/adminParentUpdateCredentials.input';
 import { AdminSignupInput } from './inputs/adminSignup.input';
 import { adminStudentSignupInput } from './inputs/adminStudentSignup.input';
+import { adminStudentUpdateCredentialsInput } from './inputs/adminStudentUpdateCredentials.input';
 import { adminTeacherSignupInput } from './inputs/adminTeacherSignup.input';
 import { AdminUpdateCredentialsInput } from './inputs/adminUpdateCredentials.input';
 
@@ -89,8 +91,15 @@ export class AdminResolver {
   
   //mutation of admin to update parent credentials
   @Mutation(() => AdminParentUpdateCredentialsResponseDto)
-  async adminParentUpdateCredentials(@Args('input') adminParentUpdateCeredentials : adminParentUpdateCredentialsInput)
+  async adminParentUpdateCredentials(@Args('input') adminParentCeredentialsUpdate : adminParentUpdateCredentialsInput)
   {
-    return await this.adminService.updateParentCredentials(adminParentUpdateCeredentials)
+    return await this.adminService.updateParentCredentials(adminParentCeredentialsUpdate)
+  }
+
+  //mutation of admin to update student credentials
+  @Mutation(() => AdminStudentUpdateCredentialsResponseDto)
+  async adminStudentUpdateCredentials(@Args('input') adminStudentCredentialsUpdate : adminStudentUpdateCredentialsInput)
+  {
+    return await this.adminService.updateStudentCredentials(adminStudentCredentialsUpdate)
   }
 }
