@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Teacher } from '.././entities/teacher.entity';
 import { Admin } from '.././entities/admin.entity';
 import { AdminSignupInput } from './inputs/adminSignup.input';
@@ -16,6 +16,7 @@ import { adminParentSignupInput } from './inputs/adminParentSignup.input';
 import { TimeTable } from '.././entities/timetable.entity';
 import { adminCreateTimetableInput } from './inputs/adminCreateTimetable.input';
 import { adminLoginInput } from './inputs/adminLogin.input';
+import { AdminUpdateCredentialsInput } from './inputs/adminUpdateCredentials.input';
 
 @Injectable()
 export class AdminService {
@@ -46,7 +47,7 @@ export class AdminService {
     catch
     {
       let apiResponse = {
-        code: 204,
+        code: 400,
         message: "Some error in creating amdin "
       }
       return apiResponse;
@@ -68,7 +69,7 @@ export class AdminService {
     catch
     {
       let apiResponse = {
-        code: 204,
+        code: 400,
         message: "Some error in creating teacher "
       }
       return apiResponse;
@@ -90,7 +91,7 @@ export class AdminService {
     catch
     {
       let apiResponse = {
-        code: 204,
+        code: 400,
         message: "Some error in creating student "
       }
       return apiResponse;
@@ -112,7 +113,7 @@ export class AdminService {
     catch
     {
       let apiResponse = {
-        code: 204,
+        code: 400,
         message: "Some error in creating accountant "
       }
       return apiResponse;
@@ -134,7 +135,7 @@ export class AdminService {
     catch
     {
       let apiResponse = {
-        code: 204,
+        code: 400,
         message: "Some error in creating subject "
       }
       return apiResponse;
@@ -156,7 +157,7 @@ export class AdminService {
     catch
     {
       let apiResponse = {
-        code: 204,
+        code: 400,
         message: "Some error in creating parent "
       }
       return apiResponse;
@@ -178,7 +179,7 @@ export class AdminService {
     catch
     {
       let apiResponse = {
-        code: 204,
+        code: 400,
         message: "Some error in creating timetable "
       }
       return apiResponse;
@@ -214,8 +215,48 @@ export class AdminService {
     catch
     {
       let apiResponse = {
-        code: 204,
+        code: 400,
         message: "Some error in logging in"
+      }
+
+      return apiResponse
+    }
+  }
+
+  async updateAdminCredentials(adminCredentialsUpdate: AdminUpdateCredentialsInput) {
+
+    try {
+      const admin = await this.adminModel.findOne({ _id: { $eq: adminCredentialsUpdate._id } }).exec();
+
+      if (!admin) {
+        let apiResponse = {
+          code: 404,
+          message: "Admin not found"
+        }
+
+        return apiResponse
+      }
+      else {
+        admin.name = adminCredentialsUpdate.name;
+        admin.email = adminCredentialsUpdate.email;
+        admin.password = adminCredentialsUpdate.password;
+
+        const updatedAdmin = admin.save();
+
+        let apiResponse = {
+          code: 200,
+          message: "Admin credentials are updated successfully",
+          data: updatedAdmin
+        }
+
+        return apiResponse
+      }
+    }
+    catch
+    {
+      let apiResponse = {
+        code : 400,
+        message : "Error in updating admin credentials"
       }
 
       return apiResponse

@@ -8,6 +8,7 @@ import { AdminParentSignupResponseDto } from './ApiResponsesDtos/adminParentSign
 import { AdminSignupResponseDto } from './ApiResponsesDtos/adminSignupResponse.dto';
 import { AdminStudentSignupResponseDto } from './ApiResponsesDtos/adminStudentSignupResponse.dto';
 import { AdminTeacherSignupResponseDto } from './ApiResponsesDtos/adminTeacherSignupResponse.dto';
+import { AdminUpdateCredentialsResponseDto } from './ApiResponsesDtos/adminUpdateCredentials.dto';
 import { adminAccoutantSignupInput } from './inputs/adminAccountantSignup.input';
 import { adminCreateTimetableInput } from './inputs/adminCreateTimetable.input';
 import { adminEnterSubjectInput } from './inputs/adminEnterSubject.input';
@@ -16,6 +17,7 @@ import { adminParentSignupInput } from './inputs/adminParentSignup.input';
 import { AdminSignupInput } from './inputs/adminSignup.input';
 import { adminStudentSignupInput } from './inputs/adminStudentSignup.input';
 import { adminTeacherSignupInput } from './inputs/adminTeacherSignup.input';
+import { AdminUpdateCredentialsInput } from './inputs/adminUpdateCredentials.input';
 
 @Resolver()
 export class AdminResolver {
@@ -69,9 +71,17 @@ export class AdminResolver {
     return await this.adminService.adminCreateTimetable(adminTimetableInput)
   }
 
+  //mutation of admin to login 
   @Mutation(() => adminLoginResponseDto)
   async amdinLogin(@Args('input') adminLoginCredentials : adminLoginInput)
   {
     return await this.adminService.loginAdmin(adminLoginCredentials)
+  }
+
+  //mutation of admin to update amdin credntials
+  @Mutation(() => AdminUpdateCredentialsResponseDto)
+  async adminUpdateCredentials(@Args('input') adminCredentialsUpdate : AdminUpdateCredentialsInput)
+  {
+    return await this.adminService.updateAdminCredentials(adminCredentialsUpdate)
   }
 }

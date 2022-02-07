@@ -43,7 +43,7 @@ export class StudentService {
     catch
     {
       let apiResponse = {
-        code: 204,
+        code: 400,
         message: "Some error in logging in"
       }
 
