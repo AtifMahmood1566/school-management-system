@@ -22,6 +22,7 @@ import { adminStudentUpdateCredentialsInput } from './inputs/adminStudentUpdateC
 import { adminTeacherUpdateCredentialsInput } from './inputs/adminTeacherUpdateCredentials.input';
 import { adminAccoutantUpdateCredentialsInput } from './inputs/adminAccountantUpdateCredentials.input';
 import { adminSubjectUpdateCredentialsInput } from './inputs/adminSubjectUpdateCredentials.input';
+import { adminTimetableUpdateCredentialsInput } from './inputs/adminTimetableUpdateCredentials.input';
 
 @Injectable()
 export class AdminService {
@@ -489,6 +490,48 @@ export class AdminService {
       let apiResponse = {
         code: 400,
         message: "Error in updating subject credentials"
+      }
+
+      return apiResponse
+    }
+  }
+
+  async updateTimetableCredentials(adminTimetableCredentialsUpdate : adminTimetableUpdateCredentialsInput)
+  {
+    try {
+      const timetable = await this.timetableModel.findOne({ _id: { $eq: adminTimetableCredentialsUpdate._id } }).exec();
+
+      if (!timetable) {
+        let apiResponse = {
+          code: 404,
+          message: "Timetable not found"
+        }
+
+        return apiResponse
+      }
+      else {
+        timetable.teacherId = adminTimetableCredentialsUpdate.teacherId;
+        timetable.day = adminTimetableCredentialsUpdate.day;
+        timetable.slot = adminTimetableCredentialsUpdate.slot;
+        timetable.subject = adminTimetableCredentialsUpdate.subject;
+        timetable.roomNo = adminTimetableCredentialsUpdate.roomNo;
+
+        const updatedTimetable = timetable.save();
+
+        let apiResponse = {
+          code: 200,
+          message: "Timetable credentials are updated successfully",
+          data: updatedTimetable
+        }
+
+        return apiResponse
+      }
+    }
+    catch
+    {
+      let apiResponse = {
+        code: 400,
+        message: "Error in updating timetable credentials"
       }
 
       return apiResponse
