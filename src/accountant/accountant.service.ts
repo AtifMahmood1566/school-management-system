@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Accountant } from '.././entities/accountant.entity';
 import { accountantLoginInput } from './inputs/accountantLogin.input';
+import * as jwt from 'jsonwebtoken';
 
 @Injectable()
 export class AccountantService {
@@ -14,14 +15,14 @@ export class AccountantService {
   async loginAccountant(accountantLoginCredentials : accountantLoginInput)
   {
     try {
-      const accountant = await this.accountantModel.find({
+      const accountant = await this.accountantModel.findOne({
         $and: [
           { email: { $eq: accountantLoginCredentials.email } },
           { password: { $eq: accountantLoginCredentials.password } }
         ]
       })
 
-      if (accountant.length == 0) {
+      if (!accountant) {
         let apiResponse = {
           code: 404,
           message: "Your email or password might be wrong"
@@ -30,9 +31,18 @@ export class AccountantService {
         return apiResponse
       }
       else {
+
+        const accountantForToken = {
+          email : accountant.email,
+          password : accountant.password
+        }
+
+        const jwtToken = await jwt.sign(accountantForToken , 'SECRET')
+
         let apiResponse = {
           code: 200,
-          message: "You are successfully logged in"
+          message: "You are successfully logged in",
+          token : jwtToken
         }
 
         return apiResponse

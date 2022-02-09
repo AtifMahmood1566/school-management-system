@@ -5,11 +5,13 @@
 type studentsLoginResponseDto {
   code: Float!
   message: String!
+  token: String
 }
 
 type teachersLoginResponseDto {
   code: Float!
   message: String!
+  token: String
 }
 
 type TeacherDto {
@@ -37,11 +39,13 @@ scalar DateTime
 type parentsLoginResponseDto {
   code: Float!
   message: String!
+  token: String
 }
 
 type accountantLoginResponseDto {
   code: Float!
   message: String!
+  token: String
 }
 
 type AccoutantDto {
@@ -103,6 +107,7 @@ type AdminEnterSubjectResponseDto {
 type adminLoginResponseDto {
   code: Float!
   message: String!
+  token: String
 }
 
 type ParentDto {

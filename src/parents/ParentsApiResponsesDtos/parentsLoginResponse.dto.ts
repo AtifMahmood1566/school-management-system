@@ -9,4 +9,7 @@ export class parentsLoginResponseDto {
     @Field()
     message : string
 
+    @Field({nullable : true})
+    token : string
+
 }

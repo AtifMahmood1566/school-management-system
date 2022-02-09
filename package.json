@@ -30,6 +30,7 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "graphql": "^15.8.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.0",
     "mongoose-unique-validator": "^2.0.1",
     "reflect-metadata": "^0.1.13",

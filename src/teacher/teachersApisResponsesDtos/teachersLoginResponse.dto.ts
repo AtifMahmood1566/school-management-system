@@ -9,4 +9,7 @@ export class teachersLoginResponseDto {
     @Field()
     message : string
 
+    @Field({nullable : true})
+    token : string
+
 }

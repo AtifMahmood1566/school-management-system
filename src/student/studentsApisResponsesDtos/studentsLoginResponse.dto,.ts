@@ -1,4 +1,4 @@
-import { Field , ObjectType } from "@nestjs/graphql";
+import { Field, ObjectType } from "@nestjs/graphql";
 
 @ObjectType()
 export class studentsLoginResponseDto {
@@ -7,6 +7,9 @@ export class studentsLoginResponseDto {
     code: number
 
     @Field()
-    message : string
+    message: string
+
+    @Field({nullable : true})
+    token: string
 
 }

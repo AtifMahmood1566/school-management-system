@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
+import * as jwt from 'jsonwebtoken';
+
 import { Teacher } from '.././entities/teacher.entity';
 import { Admin } from '.././entities/admin.entity';
 import { AdminSignupInput } from './inputs/adminSignup.input';
@@ -98,7 +100,7 @@ export class AdminService {
 
       const age = today - inputDob;
       student.age = age;
-      
+
       const studentCreated = student.save();
 
       let apiResponse = {
@@ -214,14 +216,14 @@ export class AdminService {
 
   async loginAdmin(adminLoginCredentials: adminLoginInput) {
     try {
-      const admin = await this.adminModel.find({
+      const admin = await this.adminModel.findOne({
         $and: [
           { email: { $eq: adminLoginCredentials.email } },
           { password: { $eq: adminLoginCredentials.password } }
         ]
       })
 
-      if (admin.length == 0) {
+      if (!admin) {
         let apiResponse = {
           code: 404,
           message: "Your email or password might be wrong"
@@ -230,9 +232,18 @@ export class AdminService {
         return apiResponse
       }
       else {
+
+        const adminForToken = {
+          email: admin.email,
+          password: admin.password
+        }
+
+        const jwtToken = await jwt.sign(adminForToken, 'SECRET')
+
         let apiResponse = {
           code: 200,
-          message: "You are successfully logged in"
+          message: "You are successfully logged in",
+          token: jwtToken
         }
 
         return apiResponse
@@ -345,10 +356,10 @@ export class AdminService {
       else {
         const today = new Date().getFullYear();
         const inputDob = adminStudentCredentialsUpdate.dob.getFullYear();
-  
+
         const age = today - inputDob;
         student.age = age;
-  
+
 
         student.name = adminStudentCredentialsUpdate.name;
         student.email = adminStudentCredentialsUpdate.email;
@@ -385,8 +396,7 @@ export class AdminService {
     }
   }
 
-  async updateTeacherCredentials(adminTeacherCredentialsUpdate : adminTeacherUpdateCredentialsInput)
-  {
+  async updateTeacherCredentials(adminTeacherCredentialsUpdate: adminTeacherUpdateCredentialsInput) {
     try {
       const teacher = await this.teacherModel.findOne({ _id: { $eq: adminTeacherCredentialsUpdate._id } }).exec();
 
@@ -401,10 +411,10 @@ export class AdminService {
       else {
         const today = new Date().getFullYear();
         const inputDob = adminTeacherCredentialsUpdate.dob.getFullYear();
-  
+
         const age = today - inputDob;
         teacher.age = age;
-  
+
 
         teacher.name = adminTeacherCredentialsUpdate.name;
         teacher.email = adminTeacherCredentialsUpdate.email;
@@ -440,8 +450,7 @@ export class AdminService {
     }
   }
 
-  async updateAccountantCredentials(adminAccountantCredentialsUpdate : adminAccoutantUpdateCredentialsInput)
-  {
+  async updateAccountantCredentials(adminAccountantCredentialsUpdate: adminAccoutantUpdateCredentialsInput) {
     try {
       const accountant = await this.accountantModel.findOne({ _id: { $eq: adminAccountantCredentialsUpdate._id } }).exec();
 
@@ -456,7 +465,7 @@ export class AdminService {
       else {
         const today = new Date().getFullYear();
         const inputDob = adminAccountantCredentialsUpdate.dob.getFullYear();
-  
+
         const age = today - inputDob;
         accountant.age = age;
 
@@ -494,8 +503,7 @@ export class AdminService {
     }
   }
 
-  async updateSubjectCredentials(adminSubjectCredentialsUpdate : adminSubjectUpdateCredentialsInput)
-  {
+  async updateSubjectCredentials(adminSubjectCredentialsUpdate: adminSubjectUpdateCredentialsInput) {
     try {
       const subject = await this.subjectModel.findOne({ _id: { $eq: adminSubjectCredentialsUpdate._id } }).exec();
 
@@ -533,8 +541,7 @@ export class AdminService {
     }
   }
 
-  async updateTimetableCredentials(adminTimetableCredentialsUpdate : adminTimetableUpdateCredentialsInput)
-  {
+  async updateTimetableCredentials(adminTimetableCredentialsUpdate: adminTimetableUpdateCredentialsInput) {
     try {
       const timetable = await this.timetableModel.findOne({ _id: { $eq: adminTimetableCredentialsUpdate._id } }).exec();
 

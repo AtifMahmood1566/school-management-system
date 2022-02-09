@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Teacher } from '.././entities/teacher.entity';
 import { teachersLoginInput } from './inputs/teachersLogin.input';
+import * as jwt from 'jsonwebtoken';
 
 @Injectable()
 export class TeacherService {
@@ -14,14 +15,14 @@ export class TeacherService {
   async loginTeacher(teachersLoginCredentials : teachersLoginInput)
   {
     try {
-      const teacher = await this.teacherModel.find({
+      const teacher = await this.teacherModel.findOne({
         $and: [
           { email: { $eq: teachersLoginCredentials.email } },
           { password: { $eq: teachersLoginCredentials.password } }
         ]
       })
 
-      if (teacher.length == 0) {
+      if (!teacher) {
         let apiResponse = {
           code: 404,
           message: "Your email or password might be wrong"
@@ -30,9 +31,18 @@ export class TeacherService {
         return apiResponse
       }
       else {
+
+        const teacherForToken = {
+          email : teacher.email,
+          password : teacher.password
+        }
+
+        const jwtToken = await jwt.sign(teacherForToken , 'SECRET')
+
         let apiResponse = {
           code: 200,
-          message: "You are successfully logged in"
+          message: "You are successfully logged in",
+          token : jwtToken
         }
 
         return apiResponse

@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Parent } from '.././entities/parent.entity';
 import { parentsLoginInput } from './inputs/parentsLogin.input';
+import * as jwt from 'jsonwebtoken';
 
 @Injectable()
 export class ParentsService {
@@ -14,14 +15,14 @@ export class ParentsService {
   async loginParent(parentsLoginCredentials : parentsLoginInput)
   {
     try {
-      const parent = await this.parentModel.find({
+      const parent = await this.parentModel.findOne({
         $and: [
           { email: { $eq: parentsLoginCredentials.email } },
           { password: { $eq: parentsLoginCredentials.password } }
         ]
       })
 
-      if (parent.length == 0) {
+      if (!parent) {
         let apiResponse = {
           code: 404,
           message: "Your email or password might be wrong"
@@ -30,9 +31,18 @@ export class ParentsService {
         return apiResponse
       }
       else {
+
+        const parentForToken = {
+          email : parent.email,
+          password : parent.password
+        }
+
+        const jwtToken = await jwt.sign(parentForToken , 'SECRET')
+
         let apiResponse = {
           code: 200,
-          message: "You are successfully logged in"
+          message: "You are successfully logged in",
+          token : jwtToken
         }
 
         return apiResponse
