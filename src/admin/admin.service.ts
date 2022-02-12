@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Req } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import * as jwt from 'jsonwebtoken';
@@ -25,6 +25,14 @@ import { adminTeacherUpdateCredentialsInput } from './inputs/adminTeacherUpdateC
 import { adminAccoutantUpdateCredentialsInput } from './inputs/adminAccountantUpdateCredentials.input';
 import { adminSubjectUpdateCredentialsInput } from './inputs/adminSubjectUpdateCredentials.input';
 import { adminTimetableUpdateCredentialsInput } from './inputs/adminTimetableUpdateCredentials.input';
+import { request } from 'express';
+import { Roles } from '.././entities/roles.entity';
+import { RoleMapping } from '.././entities/rolesMappin.entity';
+import { adminCreateRoleInput } from './inputs/adminCreateRole.input';
+import { adminCreateRolesMappingInput } from './inputs/adminCreateRolesMapping.input';
+import { adminRolesUpdateCredentialsInput } from './inputs/adminRolesUpdateCredentials.input';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { adminRolesMappingUpdateCredentialsInput } from './inputs/adminRolesMappingUpdateCredentials.input';
 
 @Injectable()
 export class AdminService {
@@ -36,12 +44,15 @@ export class AdminService {
     @InjectModel(Accountant.name) private accountantModel: Model<Accountant>,
     @InjectModel(Subject.name) private subjectModel: Model<Subject>,
     @InjectModel(Parent.name) private parentModel: Model<Parent>,
-    @InjectModel(TimeTable.name) private timetableModel: Model<TimeTable>
+    @InjectModel(TimeTable.name) private timetableModel: Model<TimeTable>,
+    @InjectModel(Roles.name) private rolesModel: Model<Roles>,
+    @InjectModel(RoleMapping.name) private rolesMappingModel: Model<RoleMapping>
   ) { }
 
   // funtion to signup amdin 
   async create(adminSignupInput: AdminSignupInput) {
     try {
+
       const amdin = new this.adminModel(adminSignupInput);
       const adminCreated = amdin.save();
 
@@ -238,7 +249,7 @@ export class AdminService {
           password: admin.password
         }
 
-        const jwtToken = await jwt.sign(adminForToken, 'SECRET')
+        const jwtToken = await jwt.sign(adminForToken, 'SECRET', { expiresIn: "5s" })
 
         let apiResponse = {
           code: 200,
@@ -580,6 +591,120 @@ export class AdminService {
 
       return apiResponse
     }
+  }
+
+  createRole(createRoleInput: adminCreateRoleInput) {
+    try {
+      const role = new this.rolesModel(createRoleInput)
+      const roleCreated = role.save()
+
+      let apiResponse = {
+        code: 200,
+        message: "Role is sucessfully created",
+        data: roleCreated
+      }
+
+      return apiResponse
+    }
+    catch (error) {
+      let apiResponse = {
+        code: 400,
+        message: error.message
+      }
+
+      return apiResponse
+    }
+  }
+
+  createRolesMapping(createRolesMappingInput: adminCreateRolesMappingInput) {
+    let apiResponse = {
+      code: 0,
+      message: "",
+      data: null
+    }
+
+    try {
+      const rolesMapping = new this.rolesMappingModel(createRolesMappingInput)
+      const rolesMappingCreated = rolesMapping.save()
+
+      apiResponse.code = 200,
+        apiResponse.message = "Roles Mapping is successfully created",
+        apiResponse.data = rolesMappingCreated
+    }
+    catch (error) {
+      apiResponse.code = 400,
+        apiResponse.message = error.message
+    }
+
+    return apiResponse
+  }
+
+  async updateRolesCredentials(adminRoleCredentialsUpdate: adminRolesUpdateCredentialsInput) {
+
+    let apiResponse = {
+      code: 0,
+      message: "",
+      data: null
+    }
+
+    try {
+
+      const role = await this.rolesModel.findOne({ _id: { $eq: adminRoleCredentialsUpdate._id } })
+
+      if (!role) {
+        apiResponse.code = 400,
+          apiResponse.message = "No user role found for this id "
+      }
+      else {
+        role.name = adminRoleCredentialsUpdate.name
+
+        const updatedRole = role.save()
+
+        apiResponse.code = 200,
+          apiResponse.message = "Role is successfully updated",
+          apiResponse.data = updatedRole
+      }
+    }
+    catch (error) {
+      apiResponse.code = 400,
+        apiResponse.message = error.message
+    }
+
+    return apiResponse
+
+  }
+
+  async updateRolesMappingCredentials(adminRolesMappingCredentialsUpdate: adminRolesMappingUpdateCredentialsInput) {
+    let apiResponse = {
+      code: 0,
+      message: "",
+      data: null
+    }
+
+    try {
+      const rolesMapping = await this.rolesMappingModel.findOne({ _id: { $eq: adminRolesMappingCredentialsUpdate._id } })
+
+      if (!rolesMapping) {
+        apiResponse.code = 404,
+          apiResponse.message = "No roles mapping found for this id"
+      }
+      else {
+        rolesMapping.userId = adminRolesMappingCredentialsUpdate.userId
+        rolesMapping.roleId = adminRolesMappingCredentialsUpdate.roleId
+
+        const rolesMappingUpdated = rolesMapping.save()
+
+        apiResponse.code = 200,
+          apiResponse.message = "Roles Mapping is successfully updated",
+          apiResponse.data = rolesMappingUpdated
+      }
+    }
+    catch (error) {
+      apiResponse.code = 400,
+        apiResponse.message = error.message
+    }
+
+    return apiResponse
   }
 
 }

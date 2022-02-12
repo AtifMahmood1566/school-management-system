@@ -15,6 +15,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     autoSchemaFile: 'schema.gql',
     playground : true,
     introspection : true,
+    context: ({ req }) => ({ req })
   }),
     MongooseModule.forRoot('mongodb+srv://atif:dbUserPassword@cluster0.x15aw.mongodb.net/school-management-system?retryWrites=true&w=majority'),
 ],

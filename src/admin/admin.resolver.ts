@@ -1,12 +1,18 @@
+import { Req } from '@nestjs/common';
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { threadId } from 'worker_threads';
 import { AdminService } from './admin.service';
 import { AdminAccountantSignupResponseDto } from './ApiResponsesDtos/adminAccountantSignupResponse.dto';
 import { AdminAccountantUpdateCredentialsResponseDto } from './ApiResponsesDtos/adminAccountantUpdateCredentialsResponse.dto';
+import { AdminCreateRoleResponseDto } from './ApiResponsesDtos/adminCreateRoleResponse.dto';
+import { AdminCreateRolesMappingResponseDto } from './ApiResponsesDtos/adminCreateRolesMappingRespnse.dto';
 import { AdminCreateTimetableResponseDto } from './ApiResponsesDtos/adminCreateTimetableResponse.dto';
 import { AdminEnterSubjectResponseDto } from './ApiResponsesDtos/adminEnterSubjectResponse.dto';
 import { adminLoginResponseDto } from './ApiResponsesDtos/adminLoginResponse.dto';
 import { AdminParentSignupResponseDto } from './ApiResponsesDtos/adminParentSignupResponse.dto';
 import { AdminParentUpdateCredentialsResponseDto } from './ApiResponsesDtos/adminParentUpdateCredentialsResponse.dto';
+import { adminRolesMappingUpdateCredentialsResponseDto } from './ApiResponsesDtos/adminRolesMappingUpdateCredentialsResponse.dto';
+import { adminRolesUpdateCredentialsResponseDto } from './ApiResponsesDtos/adminRolesUpdateCredentialsResponse.dto';
 import { AdminSignupResponseDto } from './ApiResponsesDtos/adminSignupResponse.dto';
 import { AdminStudentSignupResponseDto } from './ApiResponsesDtos/adminStudentSignupResponse.dto';
 import { AdminStudentUpdateCredentialsResponseDto } from './ApiResponsesDtos/adminStudentUpdateCredentials.dto';
@@ -17,11 +23,15 @@ import { AdminTimetableUpdateCredentialsResponseDto } from './ApiResponsesDtos/a
 import { AdminUpdateCredentialsResponseDto } from './ApiResponsesDtos/adminUpdateCredentials.dto';
 import { adminAccoutantSignupInput } from './inputs/adminAccountantSignup.input';
 import { adminAccoutantUpdateCredentialsInput } from './inputs/adminAccountantUpdateCredentials.input';
+import { adminCreateRoleInput } from './inputs/adminCreateRole.input';
+import { adminCreateRolesMappingInput } from './inputs/adminCreateRolesMapping.input';
 import { adminCreateTimetableInput } from './inputs/adminCreateTimetable.input';
 import { adminEnterSubjectInput } from './inputs/adminEnterSubject.input';
 import { adminLoginInput } from './inputs/adminLogin.input';
 import { adminParentSignupInput } from './inputs/adminParentSignup.input';
 import { adminParentUpdateCredentialsInput } from './inputs/adminParentUpdateCredentials.input';
+import { adminRolesMappingUpdateCredentialsInput } from './inputs/adminRolesMappingUpdateCredentials.input';
+import { adminRolesUpdateCredentialsInput } from './inputs/adminRolesUpdateCredentials.input';
 import { AdminSignupInput } from './inputs/adminSignup.input';
 import { adminStudentSignupInput } from './inputs/adminStudentSignup.input';
 import { adminStudentUpdateCredentialsInput } from './inputs/adminStudentUpdateCredentials.input';
@@ -137,5 +147,33 @@ export class AdminResolver {
   async adminTimeTableUpdateCredentials(@Args('input') adminTimetableCredentialsUpdate : adminTimetableUpdateCredentialsInput)
   {
     return await this.adminService.updateTimetableCredentials(adminTimetableCredentialsUpdate)
+  }
+
+  //mutation of admin to create role
+  @Mutation(() => AdminCreateRoleResponseDto)
+  adminCreateRole(@Args('input') createRoleInput : adminCreateRoleInput)
+  {
+    return this.adminService.createRole(createRoleInput)
+  }
+
+  //mutation of admin to create role mapping
+  @Mutation(() => AdminCreateRolesMappingResponseDto)
+  adminCreateRolesMapping(@Args('input') createRolesMappingInput : adminCreateRolesMappingInput)
+  {
+    return this.adminService.createRolesMapping(createRolesMappingInput)
+  }
+
+  //mutation of admin to update roles credentials
+  @Mutation(() => adminRolesUpdateCredentialsResponseDto)
+  async adminRolesUpdateCredentials(@Args('input') adminRoleCredentialsUpdate : adminRolesUpdateCredentialsInput)
+  {
+    return await this.adminService.updateRolesCredentials(adminRoleCredentialsUpdate)
+  }
+
+  //mutation of admin to update roles mapping credentials
+  @Mutation(() => adminRolesMappingUpdateCredentialsResponseDto)
+  async adminRolesMappingUpdateCredentials(@Args('input') adminRolesMappingCredentialsUpdate : adminRolesMappingUpdateCredentialsInput)
+  {
+    return await this.adminService.updateRolesMappingCredentials(adminRolesMappingCredentialsUpdate)
   }
 }

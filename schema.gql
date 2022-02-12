@@ -77,6 +77,29 @@ type AdminAccountantUpdateCredentialsResponseDto {
   data: AccoutantDto
 }
 
+type RolesDto {
+  _id: String!
+  name: String!
+}
+
+type AdminCreateRoleResponseDto {
+  code: Float!
+  message: String!
+  data: RolesDto
+}
+
+type RolesMappingDto {
+  _id: String!
+  userId: ID!
+  roleId: ID!
+}
+
+type AdminCreateRolesMappingResponseDto {
+  code: Float!
+  message: String!
+  data: RolesMappingDto
+}
+
 type TimetableDto {
   _id: String!
   teacherId: ID!
@@ -129,6 +152,18 @@ type AdminParentUpdateCredentialsResponseDto {
   code: Float!
   message: String!
   data: ParentDto
+}
+
+type adminRolesMappingUpdateCredentialsResponseDto {
+  code: Float!
+  message: String!
+  data: RolesMappingDto
+}
+
+type adminRolesUpdateCredentialsResponseDto {
+  code: Float!
+  message: String!
+  data: RolesDto
 }
 
 type AdminDto {
@@ -228,6 +263,10 @@ type Mutation {
   adminAccountantUpdateCredentials(input: adminAccoutantUpdateCredentialsInput!): AdminAccountantUpdateCredentialsResponseDto!
   adminSubjectUpdateCredentials(input: adminSubjectUpdateCredentialsInput!): AdminSubjectUpdateCredentialsResponseDto!
   adminTimeTableUpdateCredentials(input: adminTimetableUpdateCredentialsInput!): AdminTimetableUpdateCredentialsResponseDto!
+  adminCreateRole(input: adminCreateRoleInput!): AdminCreateRoleResponseDto!
+  adminCreateRolesMapping(input: adminCreateRolesMappingInput!): AdminCreateRolesMappingResponseDto!
+  adminRolesUpdateCredentials(input: adminRolesUpdateCredentialsInput!): adminRolesUpdateCredentialsResponseDto!
+  adminRolesMappingUpdateCredentials(input: adminRolesMappingUpdateCredentialsInput!): adminRolesMappingUpdateCredentialsResponseDto!
 }
 
 input studentsLoginInput {
@@ -404,4 +443,24 @@ input adminTimetableUpdateCredentialsInput {
   slot: String!
   subject: ID!
   roomNo: Float!
+}
+
+input adminCreateRoleInput {
+  name: String!
+}
+
+input adminCreateRolesMappingInput {
+  userId: ID!
+  roleId: ID!
+}
+
+input adminRolesUpdateCredentialsInput {
+  _id: ID!
+  name: String!
+}
+
+input adminRolesMappingUpdateCredentialsInput {
+  _id: ID!
+  userId: ID!
+  roleId: ID!
 }

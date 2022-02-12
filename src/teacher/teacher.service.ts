@@ -59,7 +59,7 @@ export class TeacherService {
     }
   }
 
-  findAll() {
-    return `This action returns all admin`;
+  async findAll() {
+    return await this.teacherModel.find();
   }
 }

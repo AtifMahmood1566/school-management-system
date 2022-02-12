@@ -9,6 +9,8 @@ import { Accountant, AccountantSchema } from '.././entities/accountant.entity';
 import { Subject, SubjectSchema } from '.././entities/subject.entity';
 import { Parent, ParentSchema } from '.././entities/parent.entity';
 import { TimeTable, TimeTableSchema } from '.././entities/timetable.entity';
+import { Roles, RolesSchema } from '.././entities/roles.entity';
+import { RoleMapping, RoleMappingSchema } from '.././entities/rolesMappin.entity';
 
 @Module({
   imports : [MongooseModule.forFeature([
@@ -32,6 +34,12 @@ import { TimeTable, TimeTableSchema } from '.././entities/timetable.entity';
     },
     {
       name : TimeTable.name , schema : TimeTableSchema
+    },
+    {
+      name : Roles.name , schema : RolesSchema
+    },
+    {
+      name : RoleMapping.name , schema : RoleMappingSchema 
     }
   ])],
   providers: [AdminResolver, AdminService]
