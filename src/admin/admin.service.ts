@@ -274,9 +274,9 @@ export class AdminService {
   async updateAdminCredentials(adminCredentialsUpdate: AdminUpdateCredentialsInput) {
 
     try {
-      const admin = await this.adminModel.findOne({ _id: { $eq: adminCredentialsUpdate._id } }).exec();
+      const updatedAdmin = await this.adminModel.findByIdAndUpdate(adminCredentialsUpdate._id, { $set: adminCredentialsUpdate }, { new: true }).exec();
 
-      if (!admin) {
+      if (!updatedAdmin) {
         let apiResponse = {
           code: 404,
           message: "Admin not found"
@@ -285,11 +285,6 @@ export class AdminService {
         return apiResponse
       }
       else {
-        admin.name = adminCredentialsUpdate.name;
-        admin.email = adminCredentialsUpdate.email;
-        admin.password = adminCredentialsUpdate.password;
-
-        const updatedAdmin = admin.save();
 
         let apiResponse = {
           code: 200,
@@ -313,9 +308,9 @@ export class AdminService {
 
   async updateParentCredentials(adminParentCeredentialsUpdate: adminParentUpdateCredentialsInput) {
     try {
-      const parent = await this.parentModel.findOne({ _id: { $eq: adminParentCeredentialsUpdate._id } }).exec();
+      const updatedParent = await this.parentModel.findByIdAndUpdate(adminParentCeredentialsUpdate._id, { $set: adminParentCeredentialsUpdate }, { new: true }).exec();
 
-      if (!parent) {
+      if (!updatedParent) {
         let apiResponse = {
           code: 404,
           message: "Parent not found"
@@ -324,13 +319,6 @@ export class AdminService {
         return apiResponse
       }
       else {
-        parent.name = adminParentCeredentialsUpdate.name;
-        parent.email = adminParentCeredentialsUpdate.email;
-        parent.password = adminParentCeredentialsUpdate.password;
-        parent.gender = adminParentCeredentialsUpdate.gender;
-        parent.contactNo = adminParentCeredentialsUpdate.contactNo;
-
-        const updatedParent = parent.save();
 
         let apiResponse = {
           code: 200,
@@ -354,9 +342,9 @@ export class AdminService {
 
   async updateStudentCredentials(adminStudentCredentialsUpdate: adminStudentUpdateCredentialsInput) {
     try {
-      const student = await this.studentModel.findOne({ _id: { $eq: adminStudentCredentialsUpdate._id } }).exec();
+      const Student = await this.studentModel.findByIdAndUpdate(adminStudentCredentialsUpdate._id, { $set: adminStudentCredentialsUpdate }, { new: true }).exec();
 
-      if (!student) {
+      if (!Student) {
         let apiResponse = {
           code: 404,
           message: "Student not found"
@@ -365,27 +353,16 @@ export class AdminService {
         return apiResponse
       }
       else {
-        const today = new Date().getFullYear();
-        const inputDob = adminStudentCredentialsUpdate.dob.getFullYear();
 
-        const age = today - inputDob;
-        student.age = age;
+        if (adminStudentCredentialsUpdate.dob) {
+          const today = new Date().getFullYear();
+          const inputDob = adminStudentCredentialsUpdate.dob.getFullYear();
 
+          const age = today - inputDob;
+          Student.age = age;
+        }
 
-        student.name = adminStudentCredentialsUpdate.name;
-        student.email = adminStudentCredentialsUpdate.email;
-        student.password = adminStudentCredentialsUpdate.password;
-        student.gender = adminStudentCredentialsUpdate.gender;
-        student.religion = adminStudentCredentialsUpdate.religion;
-        student.dob = adminStudentCredentialsUpdate.dob;
-        student.address = adminStudentCredentialsUpdate.address;
-        student.rollNumber = adminStudentCredentialsUpdate.rollNumber;
-        student.class = adminStudentCredentialsUpdate.class;
-        student.section = adminStudentCredentialsUpdate.section;
-        student.parentId = adminStudentCredentialsUpdate.parentId;
-        student.isStudent = adminStudentCredentialsUpdate.isStudent;
-
-        const updatedStudent = student.save();
+        const updatedStudent = Student.save();
 
         let apiResponse = {
           code: 200,
@@ -409,7 +386,7 @@ export class AdminService {
 
   async updateTeacherCredentials(adminTeacherCredentialsUpdate: adminTeacherUpdateCredentialsInput) {
     try {
-      const teacher = await this.teacherModel.findOne({ _id: { $eq: adminTeacherCredentialsUpdate._id } }).exec();
+      const teacher = await this.teacherModel.findByIdAndUpdate(adminTeacherCredentialsUpdate._id, { $set: adminTeacherCredentialsUpdate }, { new: true }).exec();
 
       if (!teacher) {
         let apiResponse = {
@@ -420,24 +397,13 @@ export class AdminService {
         return apiResponse
       }
       else {
-        const today = new Date().getFullYear();
-        const inputDob = adminTeacherCredentialsUpdate.dob.getFullYear();
+        if (adminTeacherCredentialsUpdate.dob) {
+          const today = new Date().getFullYear();
+          const inputDob = adminTeacherCredentialsUpdate.dob.getFullYear();
 
-        const age = today - inputDob;
-        teacher.age = age;
-
-
-        teacher.name = adminTeacherCredentialsUpdate.name;
-        teacher.email = adminTeacherCredentialsUpdate.email;
-        teacher.password = adminTeacherCredentialsUpdate.password;
-        teacher.gender = adminTeacherCredentialsUpdate.gender;
-        teacher.religion = adminTeacherCredentialsUpdate.religion;
-        teacher.dob = adminTeacherCredentialsUpdate.dob;
-        teacher.address = adminTeacherCredentialsUpdate.address;
-        teacher.salary = adminTeacherCredentialsUpdate.salary;
-        teacher.employeeId = adminTeacherCredentialsUpdate.employeeId;
-        teacher.contactNo = adminTeacherCredentialsUpdate.contactNo;
-        teacher.isTeacher = adminTeacherCredentialsUpdate.isTeacher;
+          const age = today - inputDob;
+          teacher.age = age;
+        }
 
         const updatedTeacher = teacher.save();
 
@@ -463,7 +429,7 @@ export class AdminService {
 
   async updateAccountantCredentials(adminAccountantCredentialsUpdate: adminAccoutantUpdateCredentialsInput) {
     try {
-      const accountant = await this.accountantModel.findOne({ _id: { $eq: adminAccountantCredentialsUpdate._id } }).exec();
+      const accountant = await this.accountantModel.findByIdAndUpdate(adminAccountantCredentialsUpdate._id , { $set : adminAccountantCredentialsUpdate} , { new : true}).exec();
 
       if (!accountant) {
         let apiResponse = {
@@ -474,23 +440,13 @@ export class AdminService {
         return apiResponse
       }
       else {
-        const today = new Date().getFullYear();
-        const inputDob = adminAccountantCredentialsUpdate.dob.getFullYear();
+        if (adminAccountantCredentialsUpdate.dob) {
+          const today = new Date().getFullYear();
+          const inputDob = adminAccountantCredentialsUpdate.dob.getFullYear();
 
-        const age = today - inputDob;
-        accountant.age = age;
-
-        accountant.name = adminAccountantCredentialsUpdate.name;
-        accountant.email = adminAccountantCredentialsUpdate.email;
-        accountant.password = adminAccountantCredentialsUpdate.password;
-        accountant.gender = adminAccountantCredentialsUpdate.gender;
-        accountant.religion = adminAccountantCredentialsUpdate.religion;
-        accountant.dob = adminAccountantCredentialsUpdate.dob;
-        accountant.address = adminAccountantCredentialsUpdate.address;
-        accountant.salary = adminAccountantCredentialsUpdate.salary;
-        accountant.employeeId = adminAccountantCredentialsUpdate.employeeId;
-        accountant.contactNo = adminAccountantCredentialsUpdate.contactNo;
-        accountant.isAccountant = adminAccountantCredentialsUpdate.isAccountant;
+          const age = today - inputDob;
+          accountant.age = age;
+        }
 
         const updatedAccountant = accountant.save();
 
@@ -516,9 +472,9 @@ export class AdminService {
 
   async updateSubjectCredentials(adminSubjectCredentialsUpdate: adminSubjectUpdateCredentialsInput) {
     try {
-      const subject = await this.subjectModel.findOne({ _id: { $eq: adminSubjectCredentialsUpdate._id } }).exec();
+      const updatedSubject = await this.subjectModel.findByIdAndUpdate(adminSubjectCredentialsUpdate._id , {$set : adminSubjectCredentialsUpdate} , {new : true}).exec();
 
-      if (!subject) {
+      if (!updatedSubject) {
         let apiResponse = {
           code: 404,
           message: "Subject not found"
@@ -527,11 +483,6 @@ export class AdminService {
         return apiResponse
       }
       else {
-        subject.name = adminSubjectCredentialsUpdate.name;
-        subject.subjectCode = adminSubjectCredentialsUpdate.subjectCode;
-
-        const updatedSubject = subject.save();
-
         let apiResponse = {
           code: 200,
           message: "Subject credentials are updated successfully",
@@ -554,9 +505,9 @@ export class AdminService {
 
   async updateTimetableCredentials(adminTimetableCredentialsUpdate: adminTimetableUpdateCredentialsInput) {
     try {
-      const timetable = await this.timetableModel.findOne({ _id: { $eq: adminTimetableCredentialsUpdate._id } }).exec();
+      const updatedTimetable = await this.timetableModel.findByIdAndUpdate(adminTimetableCredentialsUpdate._id , {$set : adminTimetableCredentialsUpdate} , { new : true}).exec();
 
-      if (!timetable) {
+      if (!updatedTimetable) {
         let apiResponse = {
           code: 404,
           message: "Timetable not found"
@@ -565,13 +516,6 @@ export class AdminService {
         return apiResponse
       }
       else {
-        timetable.teacherId = adminTimetableCredentialsUpdate.teacherId;
-        timetable.day = adminTimetableCredentialsUpdate.day;
-        timetable.slot = adminTimetableCredentialsUpdate.slot;
-        timetable.subject = adminTimetableCredentialsUpdate.subject;
-        timetable.roomNo = adminTimetableCredentialsUpdate.roomNo;
-
-        const updatedTimetable = timetable.save();
 
         let apiResponse = {
           code: 200,
@@ -639,7 +583,8 @@ export class AdminService {
     return apiResponse
   }
 
-  async updateRolesCredentials(adminRoleCredentialsUpdate: adminRolesUpdateCredentialsInput) {
+  async updateRolesCredentials(adminRoleCredentialsUpdate: adminRolesUpdateCredentialsInput)
+   {
 
     let apiResponse = {
       code: 0,
@@ -649,25 +594,22 @@ export class AdminService {
 
     try {
 
-      const role = await this.rolesModel.findOne({ _id: { $eq: adminRoleCredentialsUpdate._id } })
+      const updatedRole = await this.rolesModel.findByIdAndUpdate(adminRoleCredentialsUpdate._id , {$set : adminRoleCredentialsUpdate}, {new : true})
 
-      if (!role) {
+      if (!updatedRole) {
         apiResponse.code = 400,
-          apiResponse.message = "No user role found for this id "
+        apiResponse.message = "No user role found for this id "
       }
       else {
-        role.name = adminRoleCredentialsUpdate.name
-
-        const updatedRole = role.save()
 
         apiResponse.code = 200,
-          apiResponse.message = "Role is successfully updated",
-          apiResponse.data = updatedRole
+        apiResponse.message = "Role is successfully updated",
+        apiResponse.data = updatedRole
       }
     }
     catch (error) {
       apiResponse.code = 400,
-        apiResponse.message = error.message
+      apiResponse.message = error.message
     }
 
     return apiResponse
@@ -682,21 +624,17 @@ export class AdminService {
     }
 
     try {
-      const rolesMapping = await this.rolesMappingModel.findOne({ _id: { $eq: adminRolesMappingCredentialsUpdate._id } })
+      const updatedrolesMapping = await this.rolesMappingModel.findByIdAndUpdate(adminRolesMappingCredentialsUpdate._id , { $set : adminRolesMappingCredentialsUpdate}, {new : true})
 
-      if (!rolesMapping) {
+      if (!updatedrolesMapping) {
         apiResponse.code = 404,
           apiResponse.message = "No roles mapping found for this id"
       }
       else {
-        rolesMapping.userId = adminRolesMappingCredentialsUpdate.userId
-        rolesMapping.roleId = adminRolesMappingCredentialsUpdate.roleId
-
-        const rolesMappingUpdated = rolesMapping.save()
 
         apiResponse.code = 200,
           apiResponse.message = "Roles Mapping is successfully updated",
-          apiResponse.data = rolesMappingUpdated
+          apiResponse.data = updatedrolesMapping
       }
     }
     catch (error) {

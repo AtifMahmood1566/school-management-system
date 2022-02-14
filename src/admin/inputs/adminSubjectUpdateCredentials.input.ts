@@ -7,10 +7,10 @@ export class adminSubjectUpdateCredentialsInput {
     @Field(() => ID)
     _id : ObjectId
 
-    @Field()
+    @Field({nullable : true})
     name: string
 
-    @Field()
+    @Field({nullable : true})
     subjectCode : string
 
 }

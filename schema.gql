@@ -369,80 +369,80 @@ input adminLoginInput {
 
 input AdminUpdateCredentialsInput {
   _id: ID!
-  name: String!
-  email: String!
-  password: String!
+  name: String
+  email: String
+  password: String
 }
 
 input adminParentUpdateCredentialsInput {
   _id: ID!
-  name: String!
-  email: String!
-  password: String!
-  gender: String!
-  contactNo: Float!
+  name: String
+  email: String
+  password: String
+  gender: String
+  contactNo: Float
 }
 
 input adminStudentUpdateCredentialsInput {
   _id: ID!
-  name: String!
-  email: String!
-  password: String!
-  gender: String!
-  religion: String!
-  dob: DateTime!
-  address: String!
-  rollNumber: Float!
-  class: Float!
-  section: String!
-  parentId: ID!
+  name: String
+  email: String
+  password: String
+  gender: String
+  religion: String
+  dob: DateTime
+  address: String
+  rollNumber: Float
+  class: Float
+  section: String
+  parentId: ID
   isStudent: Boolean
 }
 
 input adminTeacherUpdateCredentialsInput {
   _id: ID!
-  name: String!
-  email: String!
-  password: String!
-  gender: String!
-  religion: String!
-  dob: DateTime!
-  address: String!
-  salary: Float!
-  employeeId: String!
-  contactNo: Float!
+  name: String
+  email: String
+  password: String
+  gender: String
+  religion: String
+  dob: DateTime
+  address: String
+  salary: Float
+  employeeId: String
+  contactNo: Float
   isTeacher: Boolean
 }
 
 input adminAccoutantUpdateCredentialsInput {
   _id: ID!
-  name: String!
-  email: String!
-  password: String!
-  gender: String!
-  religion: String!
+  name: String
+  email: String
+  password: String
+  gender: String
+  religion: String
   joiningDate: DateTime
-  dob: DateTime!
-  address: String!
-  salary: Float!
-  employeeId: String!
-  contactNo: Float!
+  dob: DateTime
+  address: String
+  salary: Float
+  employeeId: String
+  contactNo: Float
   isAccountant: Boolean
 }
 
 input adminSubjectUpdateCredentialsInput {
   _id: ID!
-  name: String!
-  subjectCode: String!
+  name: String
+  subjectCode: String
 }
 
 input adminTimetableUpdateCredentialsInput {
   _id: ID!
-  teacherId: ID!
-  day: String!
-  slot: String!
-  subject: ID!
-  roomNo: Float!
+  teacherId: ID
+  day: String
+  slot: String
+  subject: ID
+  roomNo: Float
 }
 
 input adminCreateRoleInput {
@@ -456,11 +456,11 @@ input adminCreateRolesMappingInput {
 
 input adminRolesUpdateCredentialsInput {
   _id: ID!
-  name: String!
+  name: String
 }
 
 input adminRolesMappingUpdateCredentialsInput {
   _id: ID!
-  userId: ID!
-  roleId: ID!
+  userId: ID
+  roleId: ID
 }

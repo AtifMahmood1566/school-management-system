@@ -8,37 +8,37 @@ export class  adminStudentUpdateCredentialsInput{
     @Field(() => ID)
     _id : ObjectId
 
-    @Field()
+    @Field({nullable : true})
     name: string
 
-    @Field()
+    @Field({nullable : true})
     email: string
 
-    @Field()
+    @Field({nullable : true})
     password: string
 
-    @Field()
+    @Field({nullable : true})
     gender: string
 
-    @Field()
+    @Field({nullable : true})
     religion: string
 
-    @Field()
+    @Field({nullable : true})
     dob: Date
 
-    @Field()
+    @Field({nullable : true})
     address: string
 
-    @Field()
+    @Field({nullable : true})
     rollNumber: number
 
-    @Field()
+    @Field({nullable : true})
     class: number
 
-    @Field()
+    @Field({nullable : true})
     section: string
 
-    @Field(() => ID)
+    @Field(() => ID , {nullable : true})
     parentId: mongoose.Schema.Types.ObjectId
 
     @Field({nullable : true})

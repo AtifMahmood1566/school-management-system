@@ -8,19 +8,19 @@ export class adminTimetableUpdateCredentialsInput {
     @Field(() => ID)
     _id : ObjectId 
 
-    @Field(() => ID)
+    @Field(() => ID , {nullable : true})
     teacherId: mongoose.Schema.Types.ObjectId
 
-    @Field()
+    @Field({nullable : true})
     day : string
     
-    @Field()
+    @Field({nullable : true})
     slot : string
 
-    @Field(() => ID)
+    @Field(() => ID , {nullable : true})
     subject : mongoose.Schema.Types.ObjectId
 
-    @Field()
+    @Field({nullable : true})
     roomNo : number
 
 }

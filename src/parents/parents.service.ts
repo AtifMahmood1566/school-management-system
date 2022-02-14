@@ -36,7 +36,6 @@ export class ParentsService {
           email : parent.email,
           password : parent.password
         }
-
         const jwtToken = await jwt.sign(parentForToken , 'SECRET')
 
         let apiResponse = {

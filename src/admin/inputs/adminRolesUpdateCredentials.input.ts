@@ -7,7 +7,7 @@ export class adminRolesUpdateCredentialsInput {
     @Field(() => ID)
     _id : ObjectId
 
-    @Field()
+    @Field({nullable : true})
     name: string
 
 }

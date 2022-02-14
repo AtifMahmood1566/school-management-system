@@ -7,10 +7,10 @@ export class adminRolesMappingUpdateCredentialsInput {
     @Field(() => ID)
     _id : mongoose.Schema.Types.ObjectId
 
-    @Field(() => ID)
+    @Field(() => ID , {nullable : true})
     userId: mongoose.Schema.Types.ObjectId
 
-    @Field(() => ID)
+    @Field(() => ID , {nullable : true})
     roleId : mongoose.Schema.Types.ObjectId
 
 }

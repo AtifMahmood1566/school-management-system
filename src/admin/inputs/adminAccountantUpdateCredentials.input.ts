@@ -7,37 +7,37 @@ export class adminAccoutantUpdateCredentialsInput{
     @Field(() => ID)
     _id : ObjectId
 
-    @Field()
+    @Field({nullable : true})
     readonly name: string
 
-    @Field()
+    @Field({nullable : true})
     readonly email: string
     
-    @Field()
+    @Field({nullable : true})
     readonly password: string
 
-    @Field()
+    @Field({nullable : true})
     readonly gender : string
 
-    @Field()
+    @Field({nullable : true})
     readonly religion : string
 
     @Field({nullable : true})
     readonly joiningDate : Date
 
-    @Field()
+    @Field({nullable : true})
     readonly dob: Date
 
-    @Field()
+    @Field({nullable : true})
     readonly address: string
 
-    @Field()
+    @Field({nullable : true})
     readonly salary : number
 
-    @Field()
+    @Field({nullable : true})
     readonly employeeId : string
 
-    @Field()
+    @Field({nullable : true})
     readonly contactNo : number 
 
     @Field({nullable : true})
