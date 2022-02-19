@@ -234,6 +234,7 @@ export class AdminService {
         ]
       })
 
+
       if (!admin) {
         let apiResponse = {
           code: 404,
@@ -244,12 +245,19 @@ export class AdminService {
       }
       else {
 
+        const adminRoleMapping = await this.rolesMappingModel.findOne({ userId: admin._id })
+
+        const adminRoles = await this.rolesModel.findOne({_id : adminRoleMapping.roleId})
+
+        console.log("role is : ", adminRoles.name  )
         const adminForToken = {
-          email: admin.email,
-          password: admin.password
+          id : admin._id,
+          email : admin.email,
+          password : admin.password,
+          roles : adminRoles.name 
         }
 
-        const jwtToken = await jwt.sign(adminForToken, 'SECRET', { expiresIn: "5s" })
+        const jwtToken = await jwt.sign(adminForToken, 'SECRET')
 
         let apiResponse = {
           code: 200,
@@ -260,11 +268,11 @@ export class AdminService {
         return apiResponse
       }
     }
-    catch
+    catch(error)
     {
       let apiResponse = {
         code: 400,
-        message: "Some error in logging in"
+        message: error.message
       }
 
       return apiResponse
@@ -429,7 +437,7 @@ export class AdminService {
 
   async updateAccountantCredentials(adminAccountantCredentialsUpdate: adminAccoutantUpdateCredentialsInput) {
     try {
-      const accountant = await this.accountantModel.findByIdAndUpdate(adminAccountantCredentialsUpdate._id , { $set : adminAccountantCredentialsUpdate} , { new : true}).exec();
+      const accountant = await this.accountantModel.findByIdAndUpdate(adminAccountantCredentialsUpdate._id, { $set: adminAccountantCredentialsUpdate }, { new: true }).exec();
 
       if (!accountant) {
         let apiResponse = {
@@ -472,7 +480,7 @@ export class AdminService {
 
   async updateSubjectCredentials(adminSubjectCredentialsUpdate: adminSubjectUpdateCredentialsInput) {
     try {
-      const updatedSubject = await this.subjectModel.findByIdAndUpdate(adminSubjectCredentialsUpdate._id , {$set : adminSubjectCredentialsUpdate} , {new : true}).exec();
+      const updatedSubject = await this.subjectModel.findByIdAndUpdate(adminSubjectCredentialsUpdate._id, { $set: adminSubjectCredentialsUpdate }, { new: true }).exec();
 
       if (!updatedSubject) {
         let apiResponse = {
@@ -505,7 +513,7 @@ export class AdminService {
 
   async updateTimetableCredentials(adminTimetableCredentialsUpdate: adminTimetableUpdateCredentialsInput) {
     try {
-      const updatedTimetable = await this.timetableModel.findByIdAndUpdate(adminTimetableCredentialsUpdate._id , {$set : adminTimetableCredentialsUpdate} , { new : true}).exec();
+      const updatedTimetable = await this.timetableModel.findByIdAndUpdate(adminTimetableCredentialsUpdate._id, { $set: adminTimetableCredentialsUpdate }, { new: true }).exec();
 
       if (!updatedTimetable) {
         let apiResponse = {
@@ -583,8 +591,7 @@ export class AdminService {
     return apiResponse
   }
 
-  async updateRolesCredentials(adminRoleCredentialsUpdate: adminRolesUpdateCredentialsInput)
-   {
+  async updateRolesCredentials(adminRoleCredentialsUpdate: adminRolesUpdateCredentialsInput) {
 
     let apiResponse = {
       code: 0,
@@ -594,22 +601,22 @@ export class AdminService {
 
     try {
 
-      const updatedRole = await this.rolesModel.findByIdAndUpdate(adminRoleCredentialsUpdate._id , {$set : adminRoleCredentialsUpdate}, {new : true})
+      const updatedRole = await this.rolesModel.findByIdAndUpdate(adminRoleCredentialsUpdate._id, { $set: adminRoleCredentialsUpdate }, { new: true })
 
       if (!updatedRole) {
         apiResponse.code = 400,
-        apiResponse.message = "No user role found for this id "
+          apiResponse.message = "No user role found for this id "
       }
       else {
 
         apiResponse.code = 200,
-        apiResponse.message = "Role is successfully updated",
-        apiResponse.data = updatedRole
+          apiResponse.message = "Role is successfully updated",
+          apiResponse.data = updatedRole
       }
     }
     catch (error) {
       apiResponse.code = 400,
-      apiResponse.message = error.message
+        apiResponse.message = error.message
     }
 
     return apiResponse
@@ -624,7 +631,7 @@ export class AdminService {
     }
 
     try {
-      const updatedrolesMapping = await this.rolesMappingModel.findByIdAndUpdate(adminRolesMappingCredentialsUpdate._id , { $set : adminRolesMappingCredentialsUpdate}, {new : true})
+      const updatedrolesMapping = await this.rolesMappingModel.findByIdAndUpdate(adminRolesMappingCredentialsUpdate._id, { $set: adminRolesMappingCredentialsUpdate }, { new: true })
 
       if (!updatedrolesMapping) {
         apiResponse.code = 404,
