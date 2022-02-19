@@ -1,13 +1,19 @@
-import { Field, ObjectType } from "@nestjs/graphql";
+import { Field, ID, ObjectType } from "@nestjs/graphql";
 import * as mongoose from 'mongoose'
 
 @ObjectType()
-export class ResultDto {
+export class QuizzMarksDto {
 
     @Field()
+    _id : string
+
+    @Field(() => ID)
     studentId: mongoose.Schema.Types.ObjectId
 
     @Field()
+    quizNo: number
+
+    @Field(() => ID)
     subject: mongoose.Schema.Types.ObjectId
 
     @Field()
@@ -20,6 +26,7 @@ export class ResultDto {
     obtainedMarks: number
 
     @Field()
-    percentage: number
+    isSubmitted: boolean
+
 
 }

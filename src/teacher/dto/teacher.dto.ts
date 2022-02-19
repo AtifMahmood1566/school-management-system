@@ -4,6 +4,9 @@ import { Field, ObjectType } from "@nestjs/graphql";
 export class TeacherDto {
 
     @Field()
+    _id : string
+
+    @Field()
     name: string
 
     @Field()

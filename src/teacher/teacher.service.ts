@@ -1,26 +1,65 @@
 import { Injectable } from '@nestjs/common';
-// import { CreateTeacherInput } from './dto/create-teacher.input';
-// import { UpdateTeacherInput } from './dto/update-teacher.input';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Teacher } from '.././entities/teacher.entity';
+import { teachersLoginInput } from './inputs/teachersLogin.input';
+import * as jwt from 'jsonwebtoken';
 
 @Injectable()
 export class TeacherService {
-  // create(createTeacherInput: CreateTeacherInput) {
-  //   return 'This action adds a new teacher';
-  // }
 
-  findAll() {
-    return `This action returns all teacher`;
+  constructor(
+    @InjectModel(Teacher.name) private teacherModel : Model<Teacher>
+  ){}
+ 
+  async loginTeacher(teachersLoginCredentials : teachersLoginInput)
+  {
+    try {
+      const teacher = await this.teacherModel.findOne({
+        $and: [
+          { email: { $eq: teachersLoginCredentials.email } },
+          { password: { $eq: teachersLoginCredentials.password } }
+        ]
+      })
+
+      if (!teacher) {
+        let apiResponse = {
+          code: 404,
+          message: "Your email or password might be wrong"
+        }
+
+        return apiResponse
+      }
+      else {
+
+        const teacherForToken = {
+          email : teacher.email,
+          password : teacher.password
+        }
+
+        const jwtToken = await jwt.sign(teacherForToken , 'SECRET')
+
+        let apiResponse = {
+          code: 200,
+          message: "You are successfully logged in",
+          token : jwtToken
+        }
+
+        return apiResponse
+      }
+    }
+    catch
+    {
+      let apiResponse = {
+        code: 400,
+        message: "Some error in logging in"
+      }
+
+      return apiResponse
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} teacher`;
-  }
-
-  // update(id: number, updateTeacherInput: UpdateTeacherInput) {
-  //   return `This action updates a #${id} teacher`;
-  // }
-
-  remove(id: number) {
-    return `This action removes a #${id} teacher`;
+  async findAll() {
+    return await this.teacherModel.find();
   }
 }

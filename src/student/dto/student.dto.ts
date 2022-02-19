@@ -1,8 +1,11 @@
-import { Field , ObjectType } from "@nestjs/graphql";
+import { Field , ID, ObjectType } from "@nestjs/graphql";
 import * as mongoose from 'mongoose'
 
 @ObjectType()
-export class ContributionDto{
+export class StudentDto{
+
+    @Field()
+    _id : string
 
     @Field()
     name: string
@@ -40,8 +43,8 @@ export class ContributionDto{
     @Field()
     section: string
 
-    @Field()
-    parrentId: mongoose.Schema.Types.ObjectId
+    @Field(() => ID)
+    parentId: mongoose.Schema.Types.ObjectId
 
     @Field()
     isStudent: boolean

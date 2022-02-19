@@ -1,5 +1,6 @@
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import * as uniqueValidator from 'mongoose-unique-validator';
 
 @Schema({collection : 'accounts'})
 export class Accountant extends Document{
@@ -42,4 +43,6 @@ export class Accountant extends Document{
     @Prop({default : true})
     isAccountant : boolean
 }
-export const TeacherSchema = SchemaFactory.createForClass(Accountant);
+export const AccountantSchema = SchemaFactory.createForClass(Accountant);
+AccountantSchema.plugin(uniqueValidator)
+

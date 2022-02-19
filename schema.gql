@@ -1,0 +1,466 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type studentsLoginResponseDto {
+  code: Float!
+  message: String!
+  token: String
+}
+
+type teachersLoginResponseDto {
+  code: Float!
+  message: String!
+  token: String
+}
+
+type TeacherDto {
+  _id: String!
+  name: String!
+  email: String!
+  password: String!
+  gender: String!
+  religion: String!
+  joiningDate: DateTime!
+  dob: DateTime!
+  age: Float!
+  address: String!
+  salary: Float!
+  employeeId: String!
+  contactNo: Float!
+  isTeacher: Boolean!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type parentsLoginResponseDto {
+  code: Float!
+  message: String!
+  token: String
+}
+
+type accountantLoginResponseDto {
+  code: Float!
+  message: String!
+  token: String
+}
+
+type AccoutantDto {
+  _id: String!
+  name: String!
+  email: String!
+  password: String!
+  gender: String!
+  religion: String!
+  joiningDate: DateTime!
+  dob: DateTime!
+  age: Float!
+  address: String!
+  salary: Float!
+  employeeId: String!
+  contactNo: Float!
+  isAccountant: Boolean!
+}
+
+type AdminAccountantSignupResponseDto {
+  code: Float!
+  message: String!
+  data: AccoutantDto
+}
+
+type AdminAccountantUpdateCredentialsResponseDto {
+  code: Float!
+  message: String!
+  data: AccoutantDto
+}
+
+type RolesDto {
+  _id: String!
+  name: String!
+}
+
+type AdminCreateRoleResponseDto {
+  code: Float!
+  message: String!
+  data: RolesDto
+}
+
+type RolesMappingDto {
+  _id: String!
+  userId: ID!
+  roleId: ID!
+}
+
+type AdminCreateRolesMappingResponseDto {
+  code: Float!
+  message: String!
+  data: RolesMappingDto
+}
+
+type TimetableDto {
+  _id: String!
+  teacherId: ID!
+  day: String!
+  slot: String!
+  subject: ID!
+  roomNo: Float!
+}
+
+type AdminCreateTimetableResponseDto {
+  code: Float!
+  message: String!
+  data: TimetableDto
+}
+
+type SubjectDto {
+  _id: String!
+  name: String!
+  subjectCode: String!
+}
+
+type AdminEnterSubjectResponseDto {
+  code: Float!
+  message: String!
+  data: SubjectDto
+}
+
+type adminLoginResponseDto {
+  code: Float!
+  message: String!
+  token: String
+}
+
+type ParentDto {
+  _id: String!
+  name: String!
+  email: String!
+  password: String!
+  gender: String!
+  contactNo: Float!
+}
+
+type AdminParentSignupResponseDto {
+  code: Float!
+  message: String!
+  data: ParentDto
+}
+
+type AdminParentUpdateCredentialsResponseDto {
+  code: Float!
+  message: String!
+  data: ParentDto
+}
+
+type adminRolesMappingUpdateCredentialsResponseDto {
+  code: Float!
+  message: String!
+  data: RolesMappingDto
+}
+
+type adminRolesUpdateCredentialsResponseDto {
+  code: Float!
+  message: String!
+  data: RolesDto
+}
+
+type AdminDto {
+  _id: String!
+  name: String!
+  email: String!
+  password: String!
+}
+
+type AdminSignupResponseDto {
+  code: Float!
+  message: String!
+  data: AdminDto
+}
+
+type StudentDto {
+  _id: String!
+  name: String!
+  email: String!
+  password: String!
+  gender: String!
+  religion: String!
+  joiningDate: DateTime!
+  dob: DateTime!
+  age: Float!
+  address: String!
+  rollNumber: Float!
+  class: Float!
+  section: String!
+  parentId: ID!
+  isStudent: Boolean!
+}
+
+type AdminStudentSignupResponseDto {
+  code: Float!
+  message: String!
+  data: StudentDto
+}
+
+type AdminStudentUpdateCredentialsResponseDto {
+  code: Float!
+  message: String!
+  data: StudentDto
+}
+
+type AdminSubjectUpdateCredentialsResponseDto {
+  code: Float!
+  message: String!
+  data: SubjectDto
+}
+
+type AdminTeacherSignupResponseDto {
+  code: Float!
+  message: String!
+  data: TeacherDto
+}
+
+type AdminTeacherUpdateCredentialsResponseDto {
+  code: Float!
+  message: String!
+  data: TeacherDto
+}
+
+type AdminTimetableUpdateCredentialsResponseDto {
+  code: Float!
+  message: String!
+  data: TimetableDto
+}
+
+type AdminUpdateCredentialsResponseDto {
+  code: Float!
+  message: String!
+  data: AdminDto
+}
+
+type Query {
+  findAll: [TeacherDto!]!
+}
+
+type Mutation {
+  studentsLogin(input: studentsLoginInput!): studentsLoginResponseDto!
+  teachersLogin(input: teachersLoginInput!): teachersLoginResponseDto!
+  parentsLogin(input: parentsLoginInput!): parentsLoginResponseDto!
+  accountantLogin(input: accountantLoginInput!): accountantLoginResponseDto!
+  adminRegistration(input: AdminSignupInput!): AdminSignupResponseDto!
+  adminTeacherSignup(input: adminTeacherSignupInput!): AdminTeacherSignupResponseDto!
+  adminStudentSignup(input: adminStudentSignupInput!): AdminStudentSignupResponseDto!
+  adminAccountantSignup(input: adminAccoutantSignupInput!): AdminAccountantSignupResponseDto!
+  adminEnterSubject(input: adminEnterSubjectInput!): AdminEnterSubjectResponseDto!
+  adminParentSignup(input: adminParentSignupInput!): AdminParentSignupResponseDto!
+  adminCreateTimetable(input: adminCreateTimetableInput!): AdminCreateTimetableResponseDto!
+  amdinLogin(input: adminLoginInput!): adminLoginResponseDto!
+  adminUpdateCredentials(input: AdminUpdateCredentialsInput!): AdminUpdateCredentialsResponseDto!
+  adminParentUpdateCredentials(input: adminParentUpdateCredentialsInput!): AdminParentUpdateCredentialsResponseDto!
+  adminStudentUpdateCredentials(input: adminStudentUpdateCredentialsInput!): AdminStudentUpdateCredentialsResponseDto!
+  adminTeacherUpdateCredentials(input: adminTeacherUpdateCredentialsInput!): AdminTeacherUpdateCredentialsResponseDto!
+  adminAccountantUpdateCredentials(input: adminAccoutantUpdateCredentialsInput!): AdminAccountantUpdateCredentialsResponseDto!
+  adminSubjectUpdateCredentials(input: adminSubjectUpdateCredentialsInput!): AdminSubjectUpdateCredentialsResponseDto!
+  adminTimeTableUpdateCredentials(input: adminTimetableUpdateCredentialsInput!): AdminTimetableUpdateCredentialsResponseDto!
+  adminCreateRole(input: adminCreateRoleInput!): AdminCreateRoleResponseDto!
+  adminCreateRolesMapping(input: adminCreateRolesMappingInput!): AdminCreateRolesMappingResponseDto!
+  adminRolesUpdateCredentials(input: adminRolesUpdateCredentialsInput!): adminRolesUpdateCredentialsResponseDto!
+  adminRolesMappingUpdateCredentials(input: adminRolesMappingUpdateCredentialsInput!): adminRolesMappingUpdateCredentialsResponseDto!
+}
+
+input studentsLoginInput {
+  email: String!
+  password: String!
+}
+
+input teachersLoginInput {
+  email: String!
+  password: String!
+}
+
+input parentsLoginInput {
+  email: String!
+  password: String!
+}
+
+input accountantLoginInput {
+  email: String!
+  password: String!
+}
+
+input AdminSignupInput {
+  name: String!
+  email: String!
+  password: String!
+}
+
+input adminTeacherSignupInput {
+  name: String!
+  email: String!
+  password: String!
+  gender: String!
+  religion: String!
+  joiningDate: DateTime
+  dob: DateTime!
+  address: String!
+  salary: Float!
+  employeeId: String!
+  contactNo: Float!
+  isTeacher: Boolean
+}
+
+input adminStudentSignupInput {
+  name: String!
+  email: String!
+  password: String!
+  gender: String!
+  religion: String!
+  joiningDate: DateTime
+  dob: DateTime!
+  address: String!
+  rollNumber: Float!
+  class: Float!
+  section: String!
+  parentId: ID!
+  isStudent: Boolean
+}
+
+input adminAccoutantSignupInput {
+  name: String!
+  email: String!
+  password: String!
+  gender: String!
+  religion: String!
+  joiningDate: DateTime
+  dob: DateTime!
+  address: String!
+  salary: Float!
+  employeeId: String!
+  contactNo: Float!
+  isAccountant: Boolean
+}
+
+input adminEnterSubjectInput {
+  name: String!
+  subjectCode: String!
+}
+
+input adminParentSignupInput {
+  name: String!
+  email: String!
+  password: String!
+  gender: String!
+  contactNo: Float!
+}
+
+input adminCreateTimetableInput {
+  teacherId: ID!
+  day: String!
+  slot: String!
+  subject: ID!
+  roomNo: Float!
+}
+
+input adminLoginInput {
+  email: String!
+  password: String!
+}
+
+input AdminUpdateCredentialsInput {
+  _id: ID!
+  name: String
+  email: String
+  password: String
+}
+
+input adminParentUpdateCredentialsInput {
+  _id: ID!
+  name: String
+  email: String
+  password: String
+  gender: String
+  contactNo: Float
+}
+
+input adminStudentUpdateCredentialsInput {
+  _id: ID!
+  name: String
+  email: String
+  password: String
+  gender: String
+  religion: String
+  dob: DateTime
+  address: String
+  rollNumber: Float
+  class: Float
+  section: String
+  parentId: ID
+  isStudent: Boolean
+}
+
+input adminTeacherUpdateCredentialsInput {
+  _id: ID!
+  name: String
+  email: String
+  password: String
+  gender: String
+  religion: String
+  dob: DateTime
+  address: String
+  salary: Float
+  employeeId: String
+  contactNo: Float
+  isTeacher: Boolean
+}
+
+input adminAccoutantUpdateCredentialsInput {
+  _id: ID!
+  name: String
+  email: String
+  password: String
+  gender: String
+  religion: String
+  joiningDate: DateTime
+  dob: DateTime
+  address: String
+  salary: Float
+  employeeId: String
+  contactNo: Float
+  isAccountant: Boolean
+}
+
+input adminSubjectUpdateCredentialsInput {
+  _id: ID!
+  name: String
+  subjectCode: String
+}
+
+input adminTimetableUpdateCredentialsInput {
+  _id: ID!
+  teacherId: ID
+  day: String
+  slot: String
+  subject: ID
+  roomNo: Float
+}
+
+input adminCreateRoleInput {
+  name: String!
+}
+
+input adminCreateRolesMappingInput {
+  userId: ID!
+  roleId: ID!
+}
+
+input adminRolesUpdateCredentialsInput {
+  _id: ID!
+  name: String
+}
+
+input adminRolesMappingUpdateCredentialsInput {
+  _id: ID!
+  userId: ID
+  roleId: ID
+}

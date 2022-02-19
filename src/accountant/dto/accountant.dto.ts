@@ -4,6 +4,9 @@ import { Field , ObjectType } from "@nestjs/graphql";
 export class AccoutantDto{
 
     @Field()
+    _id : string
+
+    @Field()
     readonly name: string
 
     @Field()
